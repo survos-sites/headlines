@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{% for locale, lang in languages %}
+    <a href="{{ path('app_load', {language: lang}) }}">
+        {{ lang }}
+    </a>
+    |
+{% endfor %}
+<table>
+    <tbody>
+    {% for source in sources %}
+        <tr>
+            <td>
+                <code>{{ source.language }}</code>
+                {{ source.name }}
+                <br />
+                <i>
+                    {{ source.description }}
+                </i>
+
+            </td>
+
+
+
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% endblock %}
