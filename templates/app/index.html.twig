@@ -9,7 +9,9 @@
     </a>
     |
 {% endfor %}
-<table>
+
+    {% set _sc = 'locale_display' %}
+<table  {{ stimulus_controller(_sc, {userLocale: app.request.locale}) }}>
     <thead>
     <tr>
         <th>lang</th>
@@ -24,6 +26,14 @@
                 <code>{{ source.language }}</code>
             </td>
             <td>
+                <span data-locale-display-target="language"
+                      data-lang="{{ source.language }}">
+                    {{ source.language }}</span>
+
+                <span data-locale-display-target="country"
+                      data-cc="{{ source.country }}">
+
+                </span>
                 {{ source.country }}
             </td>
             <td>

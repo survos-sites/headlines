@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73e95a6b1c212aed06b0dc4d5fb23a65",
+    "content-hash": "7374c0c58cd99d51cf58385e0cef511b",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1686,6 +1686,66 @@
             "time": "2023-10-06T06:47:41+00:00"
         },
         {
+            "name": "endroid/installer",
+            "version": "1.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/installer.git",
+                "reference": "308051404c8370b9641cd61d86a464f2c6938265"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/installer/zipball/308051404c8370b9641cd61d86a464f2c6938265",
+                "reference": "308051404c8370b9641cd61d86a464f2c6938265",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^2.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "endroid/quality": "dev-main"
+            },
+            "suggest": {
+                "roave/security-advisories": "Avoids installation of package versions with vulnerabilities"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "class": "Endroid\\Installer\\Installer"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\Installer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl"
+                }
+            ],
+            "description": "Composer plugin for installing configuration files",
+            "support": {
+                "issues": "https://github.com/endroid/installer/issues",
+                "source": "https://github.com/endroid/installer/tree/1.4.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/endroid",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-11-07T12:11:36+00:00"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "7.8.1",
             "source": {
@@ -2213,6 +2273,144 @@
                 "source": "https://github.com/jfsenechal/DoctrineBehaviors/tree/sf7.0"
             },
             "time": "2024-02-04T21:02:36+00:00"
+        },
+        {
+            "name": "knplabs/knp-menu",
+            "version": "v3.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpMenu.git",
+                "reference": "c39403f7c427d1b72cc56f38df0a075b4b9191fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/c39403f7c427d1b72cc56f38df0a075b4b9191fe",
+                "reference": "c39403f7c427d1b72cc56f38df0a075b4b9191fe",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "conflict": {
+                "twig/twig": "<1.42.3 || >=2,<2.9"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^9.6",
+                "psr/container": "^1.0 || ^2.0",
+                "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
+                "symfony/phpunit-bridge": "^7.0",
+                "symfony/routing": "^5.4 || ^6.0 || ^7.0",
+                "twig/twig": "^2.16 || ^3.0"
+            },
+            "suggest": {
+                "twig/twig": "for the TwigRenderer and the integration with your templates"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Menu\\": "src/Knp/Menu"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs",
+                    "homepage": "https://knplabs.com"
+                },
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "The Community",
+                    "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
+                }
+            ],
+            "description": "An object oriented menu library",
+            "homepage": "https://knplabs.com",
+            "keywords": [
+                "menu",
+                "tree"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/KnpMenu/issues",
+                "source": "https://github.com/KnpLabs/KnpMenu/tree/v3.5.0"
+            },
+            "time": "2024-03-23T15:35:09+00:00"
+        },
+        {
+            "name": "knplabs/knp-menu-bundle",
+            "version": "v3.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
+                "reference": "925dd71fc9d7c31dd852a0537757be60c25e3afe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/925dd71fc9d7c31dd852a0537757be60c25e3afe",
+                "reference": "925dd71fc9d7c31dd852a0537757be60c25e3afe",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-menu": "^3.3",
+                "php": "^8.1",
+                "symfony/deprecation-contracts": "^2.5 | ^3.3",
+                "symfony/framework-bundle": "^5.4 | ^6.0 | ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.5 | ^11.0.3",
+                "symfony/expression-language": "^5.4 | ^6.0 | ^7.0",
+                "symfony/phpunit-bridge": "^6.0 | ^7.0",
+                "symfony/templating": "^5.4 | ^6.0 | ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Bundle\\MenuBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Knplabs",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/KnpMenuBundle/contributors"
+                }
+            ],
+            "description": "This bundle provides an integration of the KnpMenu library",
+            "keywords": [
+                "menu"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/KnpMenuBundle/issues",
+                "source": "https://github.com/KnpLabs/KnpMenuBundle/tree/v3.4.1"
+            },
+            "time": "2024-04-15T13:35:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3375,6 +3573,191 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "survos/bootstrap-bundle",
+            "version": "1.5.208",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/BootstrapBundle.git",
+                "reference": "da7666d7653c4b79cf2c4dd171ec27dcc30d1f2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/BootstrapBundle/zipball/da7666d7653c4b79cf2c4dd171ec27dcc30d1f2b",
+                "reference": "da7666d7653c4b79cf2c4dd171ec27dcc30d1f2b",
+                "shasum": ""
+            },
+            "require": {
+                "endroid/installer": "^1.4",
+                "knplabs/knp-menu-bundle": "^3.2",
+                "php": "^8.1",
+                "survos/core-bundle": "^1.5.208",
+                "symfony/config": "^6.4 || ^7.0",
+                "symfony/dependency-injection": "^6.4 || ^7.0",
+                "symfony/http-kernel": "^6.4 || ^7.0",
+                "symfony/options-resolver": "^6.4 || ^7.0",
+                "symfony/ux-twig-component": "^2.8",
+                "twig/intl-extra": "^3.8",
+                "twig/string-extra": "^3.4",
+                "twig/twig": "^3.4"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/crawler-bundle": "<1.2.57",
+                "survos/doc-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "survos/auth-bundle": "^1.5.208",
+                "symfony/security-bundle": "^7.0",
+                "symfony/translation": "^7.0"
+            },
+            "suggest": {
+                "symfony/security-bundle": "User authentication"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\BootstrapBundle\\": "src/",
+                    "Survos\\BootstrapBundle\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Integrates a simple bootstrap theme in a Symfony application",
+            "keywords": [
+                "symfony-ux"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/BootstrapBundle/issues",
+                "source": "https://github.com/survos/BootstrapBundle/tree/1.5.208"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-25T14:05:59+00:00"
+        },
+        {
+            "name": "survos/core-bundle",
+            "version": "1.5.208",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosCoreBundle.git",
+                "reference": "9884289cb72169fe45d9aec5714c9a27a1849a24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosCoreBundle/zipball/9884289cb72169fe45d9aec5714c9a27a1849a24",
+                "reference": "9884289cb72169fe45d9aec5714c9a27a1849a24",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/config": "^6.4 || ^7.0",
+                "symfony/dependency-injection": "^6.4 || ^7.0",
+                "symfony/http-kernel": "^6.4 || ^7.0",
+                "symfony/serializer": "^6.4 || ^7.0",
+                "symfony/string": "^6.4 || ^7.0",
+                "twig/twig": "^3.4"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/crawler-bundle": "<1.2.57",
+                "survos/doc-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "symfony/browser-kit": "^6.4 || ^7.0",
+                "symfony/framework-bundle": "^6.4 || ^7.0",
+                "symfony/phpunit-bridge": "^6.4 || ^7.0",
+                "symfony/twig-bundle": "^6.4 || ^7.0",
+                "symfony/var-dumper": "^6.4 || ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.6-dev"
+                },
+                "symfony": {
+                    "require": "^6.4 || ^7.0"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\CoreBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Traits and Interfaces common to other Survos bundles",
+            "keywords": [
+                "symfony6"
+            ],
+            "support": {
+                "issues": "https://github.com/survos/SurvosCoreBundle/issues",
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.5.208"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-05T19:16:42+00:00"
         },
         {
             "name": "survos/libre-translate-bundle",
@@ -8257,6 +8640,90 @@
             "time": "2024-04-22T13:58:54+00:00"
         },
         {
+            "name": "symfony/ux-twig-component",
+            "version": "v2.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ux-twig-component.git",
+                "reference": "fb3d978b7f19e9a94533a3bf30d68269908ffae1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/fb3d978b7f19e9a94533a3bf30d68269908ffae1",
+                "reference": "fb3d978b7f19e9a94533a3bf30d68269908ffae1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/deprecation-contracts": "^2.2|^3.0",
+                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
+                "symfony/property-access": "^5.4|^6.0|^7.0",
+                "twig/twig": "^3.8"
+            },
+            "conflict": {
+                "symfony/config": "<5.4.0"
+            },
+            "require-dev": {
+                "symfony/console": "^5.4|^6.0|^7.0",
+                "symfony/css-selector": "^5.4|^6.0|^7.0",
+                "symfony/dom-crawler": "^5.4|^6.0|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/phpunit-bridge": "^6.0|^7.0",
+                "symfony/stimulus-bundle": "^2.9.1",
+                "symfony/stopwatch": "^5.4|^6.0|^7.0",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+                "symfony/webpack-encore-bundle": "^1.15"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/ux",
+                    "url": "https://github.com/symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\TwigComponent\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Twig components for Symfony",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "components",
+                "symfony-ux",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ux-twig-component/tree/v2.17.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-04-19T16:14:05+00:00"
+        },
+        {
             "name": "symfony/validator",
             "version": "v7.0.6",
             "source": {
@@ -8736,6 +9203,137 @@
                 }
             ],
             "time": "2024-04-18T09:24:21+00:00"
+        },
+        {
+            "name": "twig/intl-extra",
+            "version": "v3.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/intl-extra.git",
+                "reference": "39865e5d13165016a8e7ab8cc648ad2f7aa4b639"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/39865e5d13165016a8e7ab8cc648ad2f7aa4b639",
+                "reference": "39865e5d13165016a8e7ab8cc648ad2f7aa4b639",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/intl": "^5.4|^6.4|^7.0",
+                "twig/twig": "^3.9"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\Intl\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for Intl",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "intl",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/intl-extra/tree/v3.9.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-04-17T12:41:53+00:00"
+        },
+        {
+            "name": "twig/string-extra",
+            "version": "v3.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/string-extra.git",
+                "reference": "5ff1c41366aa003d45f6e2707c5d698c1b37ff99"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/string-extra/zipball/5ff1c41366aa003d45f6e2707c5d698c1b37ff99",
+                "reference": "5ff1c41366aa003d45f6e2707c5d698c1b37ff99",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/string": "^5.4|^6.4|^7.0",
+                "symfony/translation-contracts": "^1.1|^2|^3",
+                "twig/twig": "^3.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\String\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for Symfony String",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "html",
+                "string",
+                "twig",
+                "unicode"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/string-extra/tree/v3.9.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-02-10T08:52:03+00:00"
         },
         {
             "name": "twig/twig",

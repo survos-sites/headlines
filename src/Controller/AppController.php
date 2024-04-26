@@ -30,6 +30,15 @@ class AppController extends AbstractController
         $this->newsApi = new NewsApi($key);
 
     }
+
+    #[Route('/', 'app_landing_page')]
+    public function landing(Request $request): Response
+    {
+        return $this->redirectToRoute('app_homepage', [
+            '_locale' => $request->getLocale(),
+        ]);
+
+    }
     #[Route('/{_locale}/home/{language}', name: 'app_homepage')]
     public function home(
         LibreTranslate $libreTranslate,

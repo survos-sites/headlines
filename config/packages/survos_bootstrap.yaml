@@ -1,0 +1,23 @@
+survos_bootstrap:
+  #  auth_menu: true
+  routes:
+      login: app_login
+      logout: app_logout
+      register: app_register
+      homepage: app_homepage
+  menu_options:
+      frontPage: false
+      showAppMenu: false
+
+  app:
+    code: tobnews
+    abbr: <b>tobacco</b>News
+  options:
+    # consider https://startbootstrap.com/previews/simple-sidebar as another theme
+    theme: bootswatch
+    allow_login: false
+    show_locale_dropdown: true
+    offcanvas: end
+
+
+#survos_velzon:

@@ -19,4 +19,8 @@ return [
     Webfactory\Bundle\PolyglotBundle\WebfactoryPolyglotBundle::class => ['all' => true],
     Knp\DoctrineBehaviors\DoctrineBehaviorsBundle::class => ['all' => true],
     Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['dev' => true, 'test' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
+    Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
+    Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
+    Survos\BootstrapBundle\SurvosBootstrapBundle::class => ['all' => true],
 ];

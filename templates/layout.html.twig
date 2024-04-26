@@ -1,0 +1,154 @@
+{#{% extends "@SurvosVelzon/modern/base.html.twig" %}#}
+{% extends "@SurvosBootstrap/%s/base.html.twig"|format(theme_option('theme')) %}
+
+{% set leftSidebar = is_granted('ROLE_ADMIN') %}
+{% block sidebar_wrapper %}
+{% if is_granted('ROLE_ADMIN') %}
+    {{ parent() }}
+{% endif %}
+{% endblock %}
+
+{% set appShortName = 'AC' %}
+{% block logo_mini 'Mus' %}
+{% block logo_large 'Archive Connections' %}
+
+{% block title %}{{ app.current_route|trans(domain='routes') }}{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% block cart %}
+        {{ include('@SurvosVelzon/partials/_topnav_impersonator.html.twig') }}
+        {#                        {{ include('@SurvosVelzon/partials/_topnav_cart.html.twig') }} #}
+    {% endblock %}
+
+    {% block searchbox %}
+        {{ include('@SurvosVelzon/partials/_topnav_searchbar.html.twig') }}
+    {% endblock %}
+
+
+    {% block topbar_wrapper %}
+
+        {% embed('@SurvosVelzon/modern/partials/topbar.html.twig') %}
+            {% block language_selector %}
+                xx
+
+                {#                {{ project|default(false) ? '%s.locale: /%s/'|format(project.code, project.projectLocale) }} #}
+                {#                    r.locale: #}
+                {#                <i> #}
+                {#                    {{ app.request.locale }} &nbsp; #}
+                {#                </i> #}
+                {#                &nbsp; #}
+                {#                Other: #}
+                {#                {% for lang in ['en','es'] %} #}
+                {#                    {% set pathWithLocale = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: lang})) %} #}
+                {#                    {% set langClass =  lang == app.request.locale ? 'fw-bold' : 'fw-light' %} #}
+                {#                    <span> #}
+                {#                        <a  class="{{ langClass }}" href="{{ pathWithLocale }}">{{ lang }}</a> #}
+                {#                    </span #}
+                {#                {% endfor %} #}
+
+            {% endblock %}
+
+            {% block cart %}
+                {#                NOTHING IN CART #}
+                {#                {{ include('partials/_navbar_catalog.html.twig')}} #}
+            {% endblock %}
+
+        {% endembed %}
+    {% endblock %}
+
+{# {% extends app.request.get('_partial') ? "@SurvosBase/mmenu/XXspartial_layout.html.twig" : "@theme/base.html.twig"  %} #}
+{# {% extends "@SurvosBase/mmenu/base.html.twig"  %} #}
+
+{% block XXnavbar_extras %}
+    {% for catalog in project.catalogs %}
+        <li class="nav-item">
+            <a href="{{ path('catalog_show', catalog.rp) }}" class="nav-link">{{ catalog }}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+{% block brand %}
+{#    smImage: asset('/bundles/survosvelzon/images/logo-sm.png'),#}
+{#    darkImage: asset('/bundles/survosvelzon/images/logo-dark.png'),#}
+    {{ component('brand', {
+        logoLink: path('app_landing_page'),
+        smLogoHtml: 'tobnews',
+        lgLogoHtml: 'TobaccoNews',
+    }) }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {# we need to override this, otherwise we won't have the options to decide when the app menu should be displayed #}
+    {{ component('menu_breadcrumb', {
+        type: 'sidebar',
+        options: {
+            showAppMenu: true,
+            project: project|default(null),
+            core: projectCore|default(null)
+        }
+    }
+    ) }}
+{% endblock %}
+
+{% block sidebar %}
+    {{ component('menu', {
+        type: SIDEBAR_MENU,
+        options: {
+            showAppMenu: true,
+        }
+    }) }}
+{% endblock %}
+
+{% block navbar %}
+    {#    {{ parent() }} #}
+    navbar {{ _self }}
+
+    {% embed('@SurvosVelzon/velzon/_navbar.html.twig') %}
+        {% block brand %}
+            {{ component('link', {path: 'app_admin', body: 'home'|trans}) }}
+        {% endblock %}
+
+        {% block navbar_search_form %}
+            <span class="text-danger">search for projects{{ _self }}</span>
+
+        {% endblock %}
+
+        {% block top_navbar_menu %}
+            TOP NAVAR
+            {{ parent() }}
+            {{ _self }}
+
+            {{ component('menu', {
+                type: 'top_navbar',
+                caller: _self,
+                options: {
+                }
+            }) }}
+
+
+            {% if app.user %}
+                {% set includeReference = url("app_my_projects", {include: '_header.html.twig'}) %}
+                {#            <a href="{{ includeReference }}" target="_blank">{{ includeReference }}</a> #}
+                {#            {{ render_hinclude(includeReference, {attributes: {'data-with-credentials': 'true'}} ) }} #}
+
+                <div {{ stimulus_controller('content-loader', {
+                    'url': includeReference
+                }) }}>
+                    My Projects
+                </div>
+            {% endif %}
+
+            {#                    {{ render_hinclude(path('project_sitemap', project.rp({_partial: true}))) }} #}
+            {#                {{ render_hinclude(includeReference, {attributes: {'data-with-credentials': 'true'}} ) }} #}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
