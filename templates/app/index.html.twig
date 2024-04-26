@@ -2,6 +2,7 @@
 
 {% block body %}
 
+    {{ app.locale }}
 {% for locale, lang in languages %}
     <a href="{{ path('app_load', {language: lang}) }}">
         {{ lang }}
@@ -9,15 +10,28 @@
     |
 {% endfor %}
 <table>
+    <thead>
+    <tr>
+        <th>lang</th>
+        <th>country</th>
+        <th>name</th>
+    </tr>
+    </thead>
     <tbody>
     {% for source in sources %}
         <tr>
             <td>
                 <code>{{ source.language }}</code>
-                {{ source.name }}
-                <br />
+            </td>
+            <td>
+                {{ source.country }}
+            </td>
+            <td>
+                <b>
+                    {{ source.translate(app.locale).name }}
+                </b>
                 <i>
-                    {{ source.description }}
+                    {{ source.translate(app.locale).description }}
                 </i>
 
             </td>

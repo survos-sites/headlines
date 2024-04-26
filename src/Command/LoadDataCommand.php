@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Service\NewsService;
+use jcobhams\NewsApi\NewsApi;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +19,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 )]
 class LoadDataCommand extends Command
 {
-    public function __construct(private HttpClientInterface $client)
+    public function __construct(
+        private NewsService $newsService,
+        private HttpClientInterface $client)
     {
         parent::__construct();
     }
@@ -27,6 +31,7 @@ class LoadDataCommand extends Command
         $this
             ->addArgument('q', InputArgument::OPTIONAL, 'Argument description')
             ->addOption('language', 'l', InputOption::VALUE_OPTIONAL, 'source language', 'en')
+            ->addOption('load', null, InputOption::VALUE_NONE, 'load the sources first')
         ;
     }
 
@@ -35,14 +40,14 @@ class LoadDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $q = $input->getArgument('q');
 
-
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        if ($input->getOption('load')) {
+            foreach (['fr','es','en'] as $language) {
+                $this->newsService->loadSources($language);
+            }
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
+        $this->newsService->translateSources();
+
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 

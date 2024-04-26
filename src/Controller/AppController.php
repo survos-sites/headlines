@@ -22,25 +22,26 @@ class AppController extends AbstractController
     private NewsApi $newsApi;
     public function __construct(
         private EntityManagerInterface $entityManager,
-        private CacheInterface $cache
+        private CacheInterface $cache,
+        private LibreTranslate $libreTranslate
     )
     {
         $key = 'd3dec04bf26d4e678a8d02c458537ad2';
         $this->newsApi = new NewsApi($key);
 
     }
-    #[Route('/home/{language}', name: 'app_homepage')]
+    #[Route('/{_locale}/home/{language}', name: 'app_homepage')]
     public function home(
         LibreTranslate $libreTranslate,
         CacheInterface $cache,
         SourceRepository $sourceRepository,
-        string         $language = 'es'): Response
+        string         $language = null): Response
     {
 
         return $this->render('app/index.html.twig', [
-            'sources' => $sourceRepository->findBy([
+            'sources' => $sourceRepository->findBy($language ? [
                 'language' => $language
-            ],[], 40),
+            ]:[],[], 40),
 //            'headlines' => $data,
 //            'translations' => $translations,
             'languages' => $this->newsApi->getLanguages()
@@ -50,25 +51,7 @@ class AppController extends AbstractController
     #[Route('/load/{language}', name: 'app_load')]
     public function load(Request $request, $language, HttpClientInterface $client): Response
     {
-        $sources = $this->cache->get('sources_' . $language, fn(CacheItem $item) => $this->newsApi->getSources(language: $language));
 
-        foreach ($sources->sources as $data) {
-            $data = (array)$data;
-            if (!$source = $this->entityManager->getRepository(Source::class)
-                ->findOneBy(['code' => $data['id']])) {
-
-                $source = (new Source())
-                    ->setCode($data['id']);
-                $this->entityManager->persist($source);
-            }
-            $source
-                    ->setDescription($data['description'])
-                    ->setName($data['name'])
-                    ->setUrl($data['url'])
-                    ->setCountry($data['country'])
-                    ->setLanguage($data['language']);
-            }
-        $this->entityManager->flush();
         return $this->redirectToRoute('app_homepage', ['language' => $language]);
     }
 

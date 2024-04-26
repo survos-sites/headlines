@@ -4,23 +4,24 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\SourceRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SourceRepository::class)]
 #[ApiResource]
-class Source
+class Source implements TranslatableInterface
 {
+    use TranslatableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $url = null;
@@ -39,29 +40,23 @@ class Source
         return $this->id;
     }
 
-    public function getName(): ?string
+    #[Groups(['tree', 'read', 'preview','translation'])]
+    public function getName(?string $lang=null): ?string
     {
-        return $this->name;
+        return $this->translate($lang)->getName();
     }
 
-    public function setName(string $name): static
+    #[Groups(['read', 'write', 'translation'])]
+    public function getDescription($lang=null): ?string
     {
-        $this->name = $name;
-
-        return $this;
+        return $this->getTranslationEntity($lang)->getDescription();
     }
 
-    public function getDescription(): ?string
+    public function getTranslationEntity(?string $lang = null): LabelInterface|TranslationInterface
     {
-        return $this->description;
+        return $this->translate($lang);
     }
 
-    public function setDescription(?string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getUrl(): ?string
     {

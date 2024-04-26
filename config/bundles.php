@@ -17,4 +17,6 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
     Webfactory\Bundle\PolyglotBundle\WebfactoryPolyglotBundle::class => ['all' => true],
+    Knp\DoctrineBehaviors\DoctrineBehaviorsBundle::class => ['all' => true],
+    Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['dev' => true, 'test' => true],
 ];

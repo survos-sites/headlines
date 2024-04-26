@@ -40,6 +40,9 @@
             "migrations/.gitignore"
         ]
     },
+    "knplabs/doctrine-behaviors": {
+        "version": "dev-sf7.0"
+    },
     "nelmio/cors-bundle": {
         "version": "2.4",
         "recipe": {
@@ -67,6 +70,9 @@
         ]
     },
     "survos/libre-translate-bundle": {
+        "version": "1.5.208"
+    },
+    "survos/maker-bundle": {
         "version": "1.5.208"
     },
     "symfony/asset-mapper": {
