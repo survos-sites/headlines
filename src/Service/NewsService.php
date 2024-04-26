@@ -6,13 +6,16 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\Article;
 use App\Entity\Source;
+use App\Repository\ArticleRepository;
 use App\Repository\SourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use jcobhams\NewsApi\NewsApi;
 use Jefs42\LibreTranslate;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\CacheItem;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class NewsService
@@ -23,6 +26,7 @@ class NewsService
         private CacheInterface $cache,
         private LibreTranslate $libreTranslate,
         private SourceRepository $sourceRepository,
+        private ArticleRepository $articleRepository,
         private LoggerInterface $logger
     )
     {
@@ -59,33 +63,106 @@ class NewsService
 
     }
 
-    public function translateSources()
+    public function translateEntities(string $class)
     {
-        foreach ($this->sourceRepository->findAll() as $source) {
-            foreach (['en','es','fr'] as $locale) {
-                if ($source->getLanguage() === $locale) {
+        $repo = $this->entityManager->getRepository($class);
+        $fields = match($class) {
+            Article::class => ['title','description'],
+            Source::class => ['name','description'],
+        };
+        foreach ($repo->findAll() as $translatableEntity)
+        {
+            $original = $translatableEntity->translate($translatableEntity->getLanguage());
+            $actualLocale = $translatableEntity->getLanguage();
+            foreach (['en','es','fr','de'] as $locale)
+            {
+                if ($actualLocale === $locale) {
+//                    $this->logger->warning("skipping $locale in " . $translatableEntity->getTitle());
                     continue;
                 }
-                foreach (['name','description'] as $field) {
-                    $method = 'get' . ucfirst($field);
-                    if ($text = $source->$method())
+                $translatedEntity = $translatableEntity->translate($locale, fallbackToDefault: false);
+                $this->entityManager->persist($translatedEntity);
+
+                /** @var Article $translatableEntity */
+//                $translatableEntity->setCurrentLocale($locale); // no!
+                foreach ($fields as $field) {
+                    $getMethod = 'get' . ucfirst($field);
+                    assert(method_exists($class, $getMethod), "missing $getMethod in $class");
+
+                    if ($text = $original->$getMethod())
                     {
-                        $t = $this->libreTranslate->Translate(
-                            $text,
-                            source: $source->getLanguage(),
-                            target: $locale);
-                        $method = 'set' . ucfirst($field);
-                        $source->translate($locale)->$method($t);
-                        $this->logger->info("$locale $t");
+                        dump(actualLocale: $actualLocale, text: $text);
+                        $trans = $translatableEntity->getTranslations()->get($locale);
+//                            dd($locale, $trans);
+
+                        // first, check if we have it.
+                        if (true)  { // || !$existing =  $translatableEntity->translate($locale)->$method()) {
+                            $t = $this->libreTranslate->Translate(
+                                $text,
+                                source: $actualLocale,
+                                target: $locale);
+//                            assert($text <> $t, "no translation $actualLocale => $locale for $text");
+                            $this->logger->info("$actualLocale->$locale: $text");
+//                        dd($text, $t);
+                            $setMethod = 'set' . ucfirst($field);
+//                            dump($locale, $method, $t);
+                            $translatedEntity->$setMethod($t);
+                            assert($t = $translatableEntity->translate($locale)->$getMethod());
+//                            dump("$actualLocale->$locale: $text", $t);
+                        } else {
+                            $this->logger->info("existing: $actualLocale->$locale: $method $text");
+                        }
+                    } else {
+                        dd($getMethod, $translatableEntity::class);
                     }
+                    $translatableEntity->mergeNewTranslations();
                 }
             }
-            $source->mergeNewTranslations();
+            foreach ($translatableEntity->getTranslations() as $translation) {
+                $this->logger->info($translation->getLocale() . ': ' . $translation->getTitle());
+            }
+            $this->entityManager->flush();
         }
         $this->entityManager->flush();
 
+    }
 
+    public function loadArticles(string $language, string $q='tobacco')
+    {
+        $slugger = new AsciiSlugger();
+        $key = sprintf("art_%s_%s", $language, $slugger->slug($q));
+        $articles = $this->cache->get($key, fn(CacheItem $cacheItem) =>
+            $this->newsApi->getEverything($q, language: $language)
+        );
+        foreach ($articles->articles as $idx => $a) {
+            $s = $a->source;
+            if (!$s->id) {
+                continue;
+            }
+            dump('orig: ' . $language . '/' . $a->title);
+            $source = $this->sourceRepository->findOneBy(['code' => $s->id]);
+            if (!$source) {
+                continue;
+            }
 
+            $article = $this->articleRepository->get($a->url);
+            assert($source, $s->id);
+//            $source->addArticle($article); // update count?
+            $article->setSource($source);
+            $article->setUrl($a->url)
+                ->setAuthor($a->author)
+                ->setPublishedAt(new \DateTimeImmutable($a->publishedAt))
+                ->setLanguage($language)
+                ->setDefaultLocale($language)
+            ;
+            $article
+                ->translate($language)->setDescription($a->description)
+            ;
+            $article
+                ->translate($language)->setTitle($a->title);
+            $article->mergeNewTranslations();
+        }
+        $this->entityManager->flush();
     }
 
 }

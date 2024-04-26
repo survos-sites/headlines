@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\Article;
+use App\Entity\Source;
 use App\Service\NewsService;
 use jcobhams\NewsApi\NewsApi;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -41,15 +43,15 @@ class LoadDataCommand extends Command
         $q = $input->getArgument('q');
 
         if ($input->getOption('load')) {
-            foreach (['fr','es','en'] as $language) {
+            foreach (['en','de','fr','es'] as $language) {
                 $this->newsService->loadSources($language);
+                $this->newsService->loadArticles($language);
+                break;
             }
         }
-
-        $this->newsService->translateSources();
-
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $this->newsService->translateEntities(Article::class);
+//        $this->newsService->translateSources(Source::class);
+        $io->success('load/translations complete');
 
         return Command::SUCCESS;
     }

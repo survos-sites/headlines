@@ -21,6 +21,18 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function get(string $url): Article
+    {
+        $code = md5($url);
+        if (!$article = $this->findOneBy(['code' => $code])) {
+            $article = new Article();
+            $article->setCode($code);
+            $this->getEntityManager()->persist($article);
+        }
+        return $article;
+
+    }
+
     //    /**
     //     * @return Article[] Returns an array of Article objects
     //     */

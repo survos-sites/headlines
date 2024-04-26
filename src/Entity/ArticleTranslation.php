@@ -13,7 +13,7 @@ use Webfactory\Bundle\PolyglotBundle\TranslatableInterface;
 
 #[ORM\Table]
 #[ORM\Entity]
-class SourceTranslation implements TranslationInterface
+class ArticleTranslation implements TranslationInterface
 {
     use TranslationTrait;
 
@@ -23,19 +23,19 @@ class SourceTranslation implements TranslationInterface
     private $id;
 
     #[ORM\Column(length: 255)]
-    protected ?string $name = null;
+    protected ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $description = null;
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(?string $name): void
+    public function setTitle(?string $title): void
     {
-        $this->name = $name;
+        $this->title = $title;
     }
 
     public function getDescription(): ?string

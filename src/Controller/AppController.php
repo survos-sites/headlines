@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Source;
+use App\Repository\ArticleRepository;
 use App\Repository\SourceRepository;
+use App\Service\NewsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Jefs42\LibreTranslate;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,6 +46,7 @@ class AppController extends AbstractController
         LibreTranslate $libreTranslate,
         CacheInterface $cache,
         SourceRepository $sourceRepository,
+        ArticleRepository $articleRepository,
         string         $language = null): Response
     {
 
@@ -51,6 +54,11 @@ class AppController extends AbstractController
             'sources' => $sourceRepository->findBy($language ? [
                 'language' => $language
             ]:[],[], 40),
+
+            'articles' => $articleRepository->findBy($language ? [
+                'language' => $language
+            ]:[],[], 50),
+
 //            'headlines' => $data,
 //            'translations' => $translations,
             'languages' => $this->newsApi->getLanguages()
@@ -58,8 +66,12 @@ class AppController extends AbstractController
     }
 
     #[Route('/load/{language}', name: 'app_load')]
-    public function load(Request $request, $language, HttpClientInterface $client): Response
+    public function load(Request $request,
+                         $language,
+                         NewsService $newsService,
+                         HttpClientInterface $client): Response
     {
+        $articles = $newsService->loadArticles($language, $request->get('q', 'tobacco'));
 
         return $this->redirectToRoute('app_homepage', ['language' => $language]);
     }
@@ -93,7 +105,6 @@ class AppController extends AbstractController
         foreach ($newsApi->getLanguages() as $langauge) {
             $sources = $newsApi->getSources(language: $langauge);
         }
-
 
         $q = $request->get('q','microsoft');
         $results = $this->newsApi->getEverything($q, language: $language);
