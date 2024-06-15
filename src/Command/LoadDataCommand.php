@@ -45,7 +45,8 @@ class LoadDataCommand extends Command
         if ($input->getOption('load')) {
             foreach (['en','de','fr','es'] as $language) {
                 $this->newsService->loadSources($language);
-                $this->newsService->loadArticles($language);
+                // q is tied to language, only all if brand name
+                $this->newsService->loadArticles($language, $q);
                 break;
             }
         }
