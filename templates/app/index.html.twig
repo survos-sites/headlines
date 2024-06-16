@@ -4,9 +4,11 @@
 
     {{ app.locale }}
 {% for locale, lang in languages %}
-    <a href="{{ path('app_load', {language: lang}) }}">
+    <a class="btn btn-primary" href="{{ path('app_load', {language: lang}) }}">
+        LOAD
         {{ lang }}
     </a>
+
     |
 {% endfor %}
 

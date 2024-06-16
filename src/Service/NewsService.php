@@ -34,12 +34,18 @@ class NewsService
         $this->newsApi = new NewsApi($key);
     }
 
-    public function loadSources(string $language)
+    public function getSources(string $language): array
     {
         $sources = $this->cache->get('sources_' . $language,
             fn(CacheItem $item) => $this->newsApi->getSources(language: $language));
+        return $sources->sources;
+    }
 
-        foreach ($sources->sources as $data) {
+    // loads as doctrine entities.  @todo: move to StorageBox for testing
+    public function loadSources(string $language)
+    {
+        $sources = $this->getSources($language);
+        foreach ($sources as $data) {
             $data = (array)$data;
             $origLanguage = $data['language'];
             if (!$source = $this->entityManager->getRepository(Source::class)
@@ -63,7 +69,7 @@ class NewsService
 
     }
 
-    public function translateEntities(string $class)
+    public function translateEntities(string $class, array $targetLanguages=['en','es','fr','de'])
     {
         $repo = $this->entityManager->getRepository($class);
         $fields = match($class) {
@@ -74,7 +80,7 @@ class NewsService
         {
             $original = $translatableEntity->translate($translatableEntity->getLanguage());
             $actualLocale = $translatableEntity->getLanguage();
-            foreach (['en','es','fr','de'] as $locale)
+            foreach ($targetLanguages as $locale)
             {
                 if ($actualLocale === $locale) {
 //                    $this->logger->warning("skipping $locale in " . $translatableEntity->getTitle());

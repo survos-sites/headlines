@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Intl\Languages;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
@@ -32,7 +33,8 @@ class LoadDataCommand extends Command
     {
         $this
             ->addArgument('q', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('language', 'l', InputOption::VALUE_OPTIONAL, 'source language', 'en')
+            ->addOption('source', 's', InputOption::VALUE_OPTIONAL, 'comma-delimited source languages', 'en')
+            ->addOption('target', 't', InputOption::VALUE_OPTIONAL, 'comma-delimited target languages')
             ->addOption('load', null, InputOption::VALUE_NONE, 'load the sources first')
         ;
     }
@@ -41,16 +43,25 @@ class LoadDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $q = $input->getArgument('q');
+        $source = explode(',', $input->getOption('source'));
 
         if ($input->getOption('load')) {
-            foreach (['en','de','fr','es'] as $language) {
+            foreach ($source as $language) {
+                $languageName = Languages::getName($language);
+                $io->title("Loading $language $languageName searching for $q");
                 $this->newsService->loadSources($language);
                 // q is tied to language, only all if brand name
                 $this->newsService->loadArticles($language, $q);
-                break;
+//                break;
             }
         }
-        $this->newsService->translateEntities(Article::class);
+
+        if (empty($target = $input->getOption('target'))) {
+            $target = $source;
+        } else {
+            $target = explode(',', $target);
+        }
+        $this->newsService->translateEntities(Article::class, $target);
 //        $this->newsService->translateSources(Source::class);
         $io->success('load/translations complete');
 
