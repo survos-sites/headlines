@@ -15,10 +15,11 @@
         "doctrine/orm": "^3.1",
         "jcobhams/newsapi": "^1.0",
         "knplabs/doctrine-behaviors": "dev-sf7.0 as 2.6.3",
+        "league/csv": "^9.16",
         "nelmio/cors-bundle": "^2.4",
         "phpdocumentor/reflection-docblock": "^5.4",
         "phpstan/phpdoc-parser": "^1.28",
-        "survos/bootstrap-bundle": "*",
+        "survos/bootstrap-bundle": "^1.5",
         "survos/command-bundle": "^1.5",
         "survos/key-value-bundle": "^1.5",
         "survos/libre-translate-bundle": "^1.5",
@@ -103,7 +104,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "^7.0"
+            "require": "^7.1"
         }
     },
     "require-dev": {

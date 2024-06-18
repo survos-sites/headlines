@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AppController!{% endblock %}
+{% block title %}Hello HeadlinesController!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,16 +9,12 @@
 </style>
 
 <div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
     This friendly message is coming from:
     <ul>
-        <li>
-            <a href="{{ path('headlines_homepage') }}">Headlines</a>
-        </li>
-        <li>
-
-            <a href="{{ path('moma_homepage') }}">MOMA</a>
-            <a href="{{ path('moma_import') }}">MOMA Import</a>
-        </li>
+        <li>Your controller at <code>/home/tac/g/sites/headlines/src/Controller/HeadlinesController.php</code></li>
+        <li>Your template at <code>/home/tac/g/sites/headlines/templates/headlines/index.html.twig</code></li>
     </ul>
 </div>
 {% endblock %}
