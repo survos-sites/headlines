@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MomaController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+
+    <h1>Moma</h1>
+
+    {{ dump(charts) }}
+    {% for tableName, indexes in charts %}
+        <div class="row">
+    {% for indexName, chart in indexes %}
+        <div class="col">
+            <h3>{{ indexName }}</h3>
+            <div class="my-chartx">
+                {{ render_chart(chart) }}
+            </div>
+
+        </div>
+
+    {% endfor %}
+        </div>
+    {% endfor %}
+
+{#    {% endfor %}#}
+
+    Using KV, no doctrine!
+    {% for table in kv.tables %}
+{#        {{ dump(table) }}#}
+        <h3>
+            {{ table }}
+        </h3>
+        {% for index in kv.indexes(table) %}
+            <b>{{ index }}</b>
+
+            {{ kv.getCounts(index, table)|map(c => "#{c.value} #{c.count}")|join("<br />")|raw }}
+        {% endfor %}
+
+            {% for row in kv.iterate(table)  %}
+                {% if loop.index < 3 %}
+                {{ dump(row) }}
+                {% endif %}
+            {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}
