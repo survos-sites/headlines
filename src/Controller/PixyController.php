@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use League\Csv\Reader;
 use Survos\KeyValueBundle\Service\KeyValueService;
+use Survos\KeyValueBundle\Service\PixyImportService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -23,17 +24,32 @@ class PixyController extends AbstractController
         private KeyValueService $keyValueService) {
 
     }
-    private function getPixyDbName(): string
+    private function getPixyDbName(string $pixyName): string
     {
 
         //
 //        return $this->dataDir .
-        return $this->bag->get('data_dir') . '/moma/moma.pixy';
+        return $this->bag->get('data_dir') . "/$pixyName.pixy";
     }
-    #[Route('/', name: 'pixy_homepage')]
-    public function home(ChartBuilderInterface $chartBuilder): Response
+
+    private function getPixyConf(string $pixyName): ?string
     {
-        $pixyDbName = $this->getPixyDbName();
+        $dirs = [
+            $this->bag->get('data_dir'),
+            $this->bag->get('kernel.project_dir') . "/config/packages/pixy/",
+        ];
+        foreach ($dirs as $dir) {
+            $fn = $dir . "/$pixyName.yaml";
+            if (file_exists($fn)) {
+                return $fn;
+            }
+        }
+        return null;
+    }
+    #[Route('/{pixyName}', name: 'pixy_homepage')]
+    public function home(ChartBuilderInterface $chartBuilder, string $pixyName): Response
+    {
+        $pixyDbName = $this->getPixyDbName($pixyName);
         if (!file_exists($pixyDbName)) {
             dd("Import $pixyDbName first");
         }
@@ -78,24 +94,36 @@ class PixyController extends AbstractController
 
 
 
-        return $this->render('pixy/index.html.twig', [
+        return $this->render('pixy/graphs.html.twig', [
             'kv' => $kv,
             'charts' => $charts,
         ]);
 
     }
-    #[Route('/moma', name: 'pixy_import')]
-    public function import(KeyValueService $keyValueService): Response
+    #[Route('/import/{pixyName}', name: 'pixy_import')]
+    public function import(KeyValueService $keyValueService,
+                           PixyImportService $pixyImportService,
+                           string $pixyName): Response
     {
+        // get the conf file from the configured directories (from the bundle)
+
         // cache wget "https://github.com/MuseumofModernArt/collection/raw/main/Artists.csv"   ?
-        $pixyDbName = $this->getPixyDbName();
-        $ext = pathinfo($pixyDbName, PATHINFO_EXTENSION);
-        $configFilename = str_replace(".$ext", '.conf', $pixyDbName);
-        $tables = Yaml::parseFile($configFilename)['tables'];
+        $configFilename = $this->getPixyConf($pixyName);
+        $config = Yaml::parseFile($configFilename);
+        $pixyDbName = $this->getPixyDbName($pixyName);
+        $pixyImportService->import($config, $config['dir'], $pixyDbName);
+
+        dd();
+
+
+
+
+        $tables = ['tables'];
         foreach ($tables as $tableName => $tableData) {
             $tablesToCreate[$tableName] = $tableData['indexes'];
         }
         $kv = $keyValueService->getStorageBox($pixyDbName, $tablesToCreate);
+        dd($pixyDbName, $configFilename, $tablesToCreate);
 
         foreach ($tables as $tableName => $tableData) {
         $kv->map($tableData['rules'], [$tableName]);

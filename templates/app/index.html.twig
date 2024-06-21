@@ -14,11 +14,16 @@
         <li>
             <a href="{{ path('headlines_homepage') }}">Headlines</a>
         </li>
-        <li>
 
-            <a href="{{ path('pixy_homepage') }}">MOMA</a>
-            <a href="{{ path('pixy_import') }}">MOMA Import</a>
+        {% for p in ['moma','education','headlines'] %}
+        <li>
+                <b>{{ p }}</b>
+                <a href="{{ path('pixy_homepage', {pixyName: p}) }}">Show</a>
+                <a href="{{ path('pixy_import', {pixyName: p}) }}">Import</a>
         </li>
+
+            {% endfor %}
+
     </ul>
 </div>
 {% endblock %}
