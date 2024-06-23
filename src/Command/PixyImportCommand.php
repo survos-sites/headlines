@@ -42,8 +42,11 @@ final class PixyImportCommand extends InvokableServiceCommand
         string $config = 'pixy.conf',
     ): void {
 
-        if (!is_dir($dirOrFilename)) {
-            $io->error("only dirs now!");
+        // idea: if conf doesn't exist, require a directory name and create it, a la rector
+
+        // pixy databases go in datadir, not with their source? Or defined in the config
+        if (!is_dir($dirOrFilename) && !$config) {
+            $io->error("set the directory in config pass it as the first argument");
         }
 
         if (!file_exists($config) && (file_exists($configWithCsv = $dirOrFilename . "/$config"))) {
@@ -61,8 +64,10 @@ final class PixyImportCommand extends InvokableServiceCommand
         assert(file_exists($config), "Missing $config");
         if (file_exists($config)) {
             $configData = Yaml::parseFile($config);
+            $pixyDbName = pathinfo($config, PATHINFO_FILENAME) . '.pixy';
+        } else {
+            $pixyDbName = $dirOrFilename . "/" . u(pathinfo($dirOrFilename, PATHINFO_FILENAME))->snake() . '.pixy';
         }
-        $pixyDbName = $dirOrFilename . "/" . u(pathinfo($dirOrFilename, PATHINFO_FILENAME))->snake() . '.pixy';
 
 
         $finder = new Finder();
@@ -70,6 +75,7 @@ final class PixyImportCommand extends InvokableServiceCommand
         $map = [];
         $fileMap=[]; // from a csv file to a specific table format.
 
+        $pixyImportService->import($configData, $pixyDbName);
 
         if (0) {
 
@@ -90,6 +96,6 @@ final class PixyImportCommand extends InvokableServiceCommand
         }
 
 
-        $io->success('pixy:import success.');
+        $io->success('pixy:import success ' . $pixyDbName);
     }
 }

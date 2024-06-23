@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -47,20 +48,24 @@ class PixyController extends AbstractController
         return null;
     }
     #[Route('/{pixyName}', name: 'pixy_homepage')]
-    public function home(ChartBuilderInterface $chartBuilder, string $pixyName): Response
+    public function home(ChartBuilderInterface $chartBuilder,
+                         string $pixyName,
+    #[MapQueryParameter] int $limit = 5
+    ): Response
     {
         $pixyDbName = $this->getPixyDbName($pixyName);
         if (!file_exists($pixyDbName)) {
             dd("Import $pixyDbName first");
         }
-
+        $firstRecords = [];
 
         $kv = $this->keyValueService->getStorageBox($pixyDbName);
         foreach ($kv->getTables() as $tableName) {
+            $firstRecords[$tableName] = $kv->iterate($tableName)->current();
             foreach ($kv->getIndexes($tableName) as $indexName) {
                 $labels =  [];
                 $values = [];
-                $counts = $kv->getCounts($indexName, $tableName);
+                $counts = $kv->getCounts($indexName, $tableName, $limit);
                 foreach ($counts as $count) {
                     $labels[] = $count['value']; // the property name
                     $values[] = $count['count'];
@@ -95,7 +100,8 @@ class PixyController extends AbstractController
 
 
         return $this->render('pixy/graphs.html.twig', [
-            'kv' => $kv,
+            'kv' => $kv, // avoidable?/
+            'firstRecords' => $firstRecords,
             'charts' => $charts,
         ]);
 
@@ -103,15 +109,25 @@ class PixyController extends AbstractController
     #[Route('/import/{pixyName}', name: 'pixy_import')]
     public function import(KeyValueService $keyValueService,
                            PixyImportService $pixyImportService,
-                           string $pixyName): Response
+                           string $pixyName,
+                           #[MapQueryParameter] int $limit = 0,
+    ): Response
     {
         // get the conf file from the configured directories (from the bundle)
 
         // cache wget "https://github.com/MuseumofModernArt/collection/raw/main/Artists.csv"   ?
-        $configFilename = $this->getPixyConf($pixyName);
-        $config = Yaml::parseFile($configFilename);
+        if ($configFilename = $this->getPixyConf($pixyName)) {
+            $config = Yaml::parseFile($configFilename);
+        } else {
+            $config = [
+                'dir' => "$pixyName"
+            ];
+        }
         $pixyDbName = $this->getPixyDbName($pixyName);
-        $pixyImportService->import($config, $config['dir'], $pixyDbName);
+        $pixyImportService->import($config, $pixyDbName, limit: $limit);
+        return $this->redirectToRoute('pixy_homepage', [
+            'pixyName' => $pixyName
+        ]);
 
         dd();
 
@@ -123,7 +139,7 @@ class PixyController extends AbstractController
             $tablesToCreate[$tableName] = $tableData['indexes'];
         }
         $kv = $keyValueService->getStorageBox($pixyDbName, $tablesToCreate);
-        dd($pixyDbName, $configFilename, $tablesToCreate);
+//        dd($pixyDbName, $configFilename, $tablesToCreate);
 
         foreach ($tables as $tableName => $tableData) {
         $kv->map($tableData['rules'], [$tableName]);

@@ -1,0 +1,23 @@
+version: 1.1
+source:
+    notes: |
+        The JSON feed has more and better data, e.g. measurements broken out,
+        and exhibitions in a JSON list, artist id.
+        But it is more complicated to change property names of JSON
+    dir: /home/tac/g/museado/data/cma # relative to data_dir
+    ignore: /report|json/
+#    include: /*.json/
+    github: https://github.com/ClevelandMuseumArt/openaccess
+
+files:
+    /data/: artwork
+tables:
+    artwork:
+        indexes:
+            - accession_number|text
+            - license
+            - technique
+            - culture
+        rules:
+#            /accession_number/: code
+            /share_license_status/: license

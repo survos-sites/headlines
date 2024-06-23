@@ -5,15 +5,20 @@ Primarily a testing ground for translations and key-value-bundle
 ## Developer Installation
 
 ```bash
-git clone git@github.com:survos-sites/artwork.git && cd artwork
+git clone git@github.com:survos-sites/pixy-demo.git && cd pixy-demo
 composer install
 symfony check:req
-wget "https://github.com/MuseumofModernArt/collection/raw/main/Artists.csv"  
-wget "https://github.com/MuseumofModernArt/collection/raw/main/Artworks.csv"  
 bin/console doctrine:schema:update --force --complete
 symfony server:start -d
 # search for Microsoft in en and es feeds
 symfony open:local
+```
+
+Download the data, though eventually the conf files should have this!
+
+```
+wget "https://github.com/MuseumofModernArt/collection/raw/main/Artists.csv"  
+wget "https://github.com/MuseumofModernArt/collection/raw/main/Artworks.csv"  
 ```
 
 ## Additional Bundles

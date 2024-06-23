@@ -26,4 +26,8 @@ return [
     Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true],
     Survos\KeyValueBundle\SurvosKeyValueBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
+    Survos\InspectionBundle\SurvosInspectionBundle::class => ['all' => true],
+    Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
+    Survos\SimpleDatatables\SurvosSimpleDatatablesBundle::class => ['all' => true],
+    Zenstruck\Twig\ZenstruckTwigServiceBundle::class => ['all' => true],
 ];
