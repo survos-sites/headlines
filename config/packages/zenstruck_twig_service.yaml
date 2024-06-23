@@ -1,0 +1,7 @@
+zenstruck_twig_service:
+  # use the array key to customize the name
+  functions:
+    fetch: file_get_contents # available as "fn_fetch()" in twig
+    json_decode: json_decode
+#    custom: [service.id, serviceMethod] # available as "fn_custom()" in twig
+#    alias: [Some\Class, somePublicStaticMethod] # available as "fn_alias()" in twig
