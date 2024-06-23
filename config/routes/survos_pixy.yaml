@@ -1,0 +1,3 @@
+survos_key_value:
+  resource: '@SurvosKeyValueBundle/config/routes.php'
+  prefix: '/pixy'
