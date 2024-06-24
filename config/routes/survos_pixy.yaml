@@ -1,3 +1,11 @@
 survos_key_value:
   resource: '@SurvosKeyValueBundle/config/routes.php'
+#  resource: '@SurvosKeyValue/Controller/PixyController.php'
   prefix: '/pixy'
+#  type: attribute
+#    prefix: /grid
+#    #  type: attribute
+#
+#    resource:
+#      path: ../../vendor/survos/api-grid-bundle/src/Controller/
+#      namespace: Survos\ApiGrid\Controller

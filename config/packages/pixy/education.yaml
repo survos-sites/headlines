@@ -2,7 +2,7 @@
 version: 1.1
 # so we can import with just a conf file.
 source:
-    dir: /home/tac/g/trash/O365-EDU-Tools/CSV Samples/SDS Format/100 Users
+    dir: /home/tac/trash/O365-EDU-Tools/CSV Samples/SDS Format/100 Users
 files:
     # snake-case by default, e.g.
     /School/i: school

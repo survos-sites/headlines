@@ -24,7 +24,7 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-*/pixy
+#*/pixy
 # csv and json files
 data
 
