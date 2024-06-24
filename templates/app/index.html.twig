@@ -10,10 +10,12 @@
         </li>
 
         {# deal with headlines separately, license, JSON, etc. #}
-        {% for p in ['moma','education', 'cma', 'anki'] %}
+        {% for p in ['moma','education', 'cma', 'anki','fake-jobs'] %}
         <li>
                 <b>{{ p }}</b>
                 <a href="{{ path('pixy_homepage', {pixyName: p}) }}">Show</a>
+
+
             IMPORT:
             {% for limit in [50, 500, 5000, 50000, 0] %}
                 <a href="{{ path('pixy_import', {limit: limit, pixyName: p}) }}">{{ limit }}</a>

@@ -39,3 +39,9 @@ Display headlines from NewsAPI in multiple language.
 ```bash
 bin/console app:load-data Microsoft --language=en,es 
 ```
+
+## datasets
+
+https://www.kaggle.com/competitions/petfinder-adoption-prediction/data
+
+has lookup table for breeds, etc.

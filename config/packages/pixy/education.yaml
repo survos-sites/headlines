@@ -2,7 +2,8 @@
 version: 1.1
 # so we can import with just a conf file.
 source:
-    dir: /home/tac/trash/O365-EDU-Tools/CSV Samples/SDS Format/100 Users
+    installation: git clone git@github.com:OfficeDev/O365-EDU-Tools.git
+    dir: /home/tac/g/trash/O365-EDU-Tools/CSV Samples/SDS Format/100 Users
 files:
     # snake-case by default, e.g.
     /School/i: school
@@ -15,6 +16,14 @@ tables:
             /^SIS ID$/: id # or teacher_id?
             /^Section Name$/: name # or teacher_id?
             /^School SIS ID$/: school_id #@school_id? @{school}?
+        cast:
+            /_id$/: int
+            /^is_/: bool
+            /^(notes)$/: text
+            /^(description)$/: description
+            /^(name)$/: label
+#        translatable:
+
 
     # SIS ID,School SIS ID,First Name,Last Name,Username,Password,State ID,Teacher Number,Status,Middle Name,Secondary Email,Title,Qualification
     teacher:

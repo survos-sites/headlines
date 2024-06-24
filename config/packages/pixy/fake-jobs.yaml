@@ -1,0 +1,25 @@
+# https://github.com/OfficeDev/O365-EDU-Tools/tree/master/CSV%20Samples
+version: 1.1
+# so we can import with just a conf file.
+source:
+    installation: kaggle datasets download -d shivamb/real-or-fake-fake-jobposting-prediction
+    dir: /fake-jobs
+    delimiter: ","
+files:
+    # snake-case by default, e.g.
+    /fake_job_postings/i: job
+tables:
+    # SIS ID,School SIS ID,Section Name,Section Number,Term SIS ID,Term Name,Term StartDate,Term EndDate,Course SIS ID,Course Name,Course Number,Course Description,Course Subject,Periods,Status
+    job:
+        indexes: 'id|int,department,employment_type'
+        # column header rules.  Use rulesets?
+        rules:
+            /^job_id$/: id # or teacher_id?
+        cast:
+            /_id$/: int
+            /^(is|has|)_/: bool
+            /^(fraudulent)$/: bool
+            /^(notes)$/: text
+            /^(description)$/: description
+            /^(name)$/: label
+#        translatable:
