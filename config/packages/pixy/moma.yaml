@@ -20,6 +20,8 @@ tables:
             - nationality
             - birth_year|INTEGER
             - gender
+        properties: # extracted from json as virtual columns
+            - wiki_qid
 #             - '&qid'
         rules:
             /ConstituentID/: id

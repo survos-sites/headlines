@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AppController!{% endblock %}
+
+{% block body %}
+
+    <h1>{{ info.label }}</h1>
+    <code>{{ info.id }}</code>
+    <h2>{{ info.properties|length }} Properties</h2>
+    <ol>
+    {% for property in info.properties %}
+        <li>
+            <code>{{ property.id }}</code>
+            {{ property.label|default('no-label') }}
+            <ol>
+
+            {% for i in property.values|default([]) %}
+                <li>
+                    <code>{{ i.id }}</code>
+                    {{ i.label|default('no-label') }}
+
+                    {% if i.qualifiers|length %}
+                    <h5>{{ i.qualifiers|length }} Qualifiers</h5>
+                    <ul>
+                    {% for q in i.qualifiers %}
+                        {{ q.id|default('??') }}
+                        {{ q.label|default('no-label') }}
+                        {{ q.value|default('no-value') }}
+
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
+{#                    {{ dump(i) }}#}
+                </li>
+
+            {% endfor %}
+            </ol>
+        </li>
+    {% endfor %}
+    </ol>
+{% endblock %}

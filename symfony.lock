@@ -130,6 +130,9 @@
     "survos/simple-datatables-bundle": {
         "version": "1.5.240"
     },
+    "survos/wiki-bundle": {
+        "version": "1.5.135"
+    },
     "symfony/asset-mapper": {
         "version": "7.0",
         "recipe": {

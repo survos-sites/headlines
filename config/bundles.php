@@ -30,4 +30,5 @@ return [
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\SimpleDatatables\SurvosSimpleDatatablesBundle::class => ['all' => true],
     Zenstruck\Twig\ZenstruckTwigServiceBundle::class => ['all' => true],
+    Survos\WikiBundle\SurvosWikiBundle::class => ['all' => true],
 ];
