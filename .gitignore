@@ -11,6 +11,8 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
+/.phpunit.cache
+/coverage
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
