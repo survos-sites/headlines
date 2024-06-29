@@ -104,7 +104,8 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "coverage": "php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage"
     },
     "conflict": {
         "symfony/symfony": "*"
