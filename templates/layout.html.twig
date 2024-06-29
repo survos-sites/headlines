@@ -75,16 +75,6 @@
     {% endfor %}
 {% endblock %}
 
-{% block brand %}
-{#    smImage: asset('/bundles/survosvelzon/images/logo-sm.png'),#}
-{#    darkImage: asset('/bundles/survosvelzon/images/logo-dark.png'),#}
-    {{ component('brand', {
-        logoLink: path('app_landing_page'),
-        smLogoHtml: 'tobnews',
-        lgLogoHtml: 'TobaccoNews',
-    }) }}
-{% endblock %}
-
 {% block breadcrumbs %}
     {# we need to override this, otherwise we won't have the options to decide when the app menu should be displayed #}
     {{ component('menu_breadcrumb', {

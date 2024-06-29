@@ -9,27 +9,6 @@ use PHPUnit\Framework\Attributes\TestWithJson;
 
 class PixyWriterTest extends KernelTestCase
 {
-    public function testSomething(): void
-    {
-        $kernel = self::bootKernel();
-
-        $this->assertSame('test', $kernel->getEnvironment());
-        // $routerService = static::getContainer()->get('router');
-         $kvService = static::getContainer()->get(KeyValueService::class);
-         // @todo: define where dbs are kept
-        $filename = 'test.db';
-        if (file_exists($filename)) {
-            unlink($filename);
-        }
-        $kv = $kvService->getStorageBox($filename);
-        $this->assertSame(0, count($kv->getTables()));
-
-
-
-        $table = $kv->createTable('movie', '&&id|int,year|integer');
-
-
-    }
 
 //    #[Test]
 //    #[TestWithJson('{"a": 1}')]

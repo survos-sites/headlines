@@ -17,12 +17,12 @@ tables:
 #            - description|SEARCHTEXT,translatable
         # column header rules.  Use rulesets?
         rules:
-            /ObjectID/: id
+            /ObjectID/i: id
             /BeginDate/: artistBirthYear
             /EndDate/: artistDeathYear
             /^Date$/: art_year
 #            /^Date_Acquired/: art_year
-            /ConstituentID/: artist_id
+            /ConstituentID/: artist_id  # this rule ONLY applied in artwork.  Bug
         # could come from SQL or created during the import
         virtualColumns:
             - isAlive:

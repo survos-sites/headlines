@@ -10,12 +10,12 @@ survos_bootstrap:
       showAppMenu: false
 
   app:
-    code: tobnews
-    abbr: <b>tobacco</b>News
+    code: pixie
+    abbr: <b>Pixie</b>Dash
   options:
     # consider https://startbootstrap.com/previews/simple-sidebar as another theme
     theme: bootswatch
-    allow_login: false
+    allow_login: true
     show_locale_dropdown: true
     offcanvas: end
 
