@@ -37,7 +37,7 @@ final class PixieImportCommand extends InvokableServiceCommand
         PixieService                                                         $PixieService,
         PixieImportService                                                       $PixieImportService,
         #[Argument(description: '(string)')] string                             $dirOrFilename = '',
-        #[Option(description: 'conf filename, default to directory name of first argument, or Pixie.conf', shortcut: 'c')]
+        #[Option(shortcut: 'c', description: 'conf filename, default to directory name of first argument, or Pixie.conf')]
         string                                                                  $config = 'Pixie.conf',
         #[Option(description: "max number of records per table to import")] int $limit = 0,
         #[Option(description: "Batch size for commit")] int                     $batch = 500
@@ -45,11 +45,13 @@ final class PixieImportCommand extends InvokableServiceCommand
     {
 
         // idea: if conf doesn't exist, require a directory name and create it, a la rector
+        dd($dirOrFilename, $config);
 
         // Pixie databases go in datadir, not with their source? Or defined in the config
         if (!is_dir($dirOrFilename) && !$config) {
             $io->error("set the directory in config pass it as the first argument");
         }
+
 
         if (!file_exists($config) && (file_exists($configWithCsv = $dirOrFilename . "/$config"))) {
             $config = $configWithCsv;

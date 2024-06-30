@@ -13,9 +13,12 @@ use Wikidata\Property;
 class AppController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function index(): Response
+    public function index(PixieService $pixieService): Response
     {
+        $configs = $pixieService->getConfigFiles();
+        dd($configs, $pixieService->getConfigDir());
         return $this->render('app/index.html.twig', [
+
         ]);
     }
 
