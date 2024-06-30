@@ -1,6 +1,19 @@
 # MultiLingual Artwork from MOMA
 
-Primarily a testing ground for translations and key-value-bundle
+Primarily a testing ground for translations and pixie-bundle
+
+## Layout
+
+```yaml
+survos_pixie:
+  # directories are relative to the project dir if not prefixed with /
+
+  # location of the .pixie files.  Add to .gitignore to prevent checkin if in the repo path
+  directory: pixie
+  # location of the .config.yaml files
+  config_directory: config/packages/pixie
+  # data is defined in the .conf files
+```
 
 ## Developer Installation
 

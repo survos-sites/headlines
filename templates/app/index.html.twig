@@ -3,11 +3,15 @@
 {% block title %}Hello AppController!{% endblock %}
 
 {% block body %}
+
+    <h1>{{ dir }}</h1>
 <div class="example-wrapper">
     <ul>
         <li>
             <a href="{{ path('headlines_homepage') }}">Headlines</a>
         </li>
+
+        {{ dump(configs) }}
 
         {# deal with headlines separately, license, JSON, etc. #}
         {% for p in ['moma','education', 'cma', 'anki','fake-jobs','mexmus','imdb'] %}

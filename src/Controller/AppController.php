@@ -16,8 +16,9 @@ class AppController extends AbstractController
     public function index(PixieService $pixieService): Response
     {
         $configs = $pixieService->getConfigFiles();
-        dd($configs, $pixieService->getConfigDir());
         return $this->render('app/index.html.twig', [
+            'dir' => $pixieService->getConfigDir(),
+            'configs' => $configs,
 
         ]);
     }
@@ -29,11 +30,11 @@ class AppController extends AbstractController
      */
     #[Route('/wiki', name: 'app_wiki')]
     public function wiki(
-        PixieService $PixieService,
+        PixieService $pixieService,
         WikiService $wikiService
     ): Response
     {
-        $kv = $PixieService->getStorageBox('moma.Pixie');
+        $kv = $pixieService->getStorageBox('moma.Pixie');
         $kv->select('artist');
         foreach ($kv->iterate(where: [
 //            'wiki_qid'=>

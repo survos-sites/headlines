@@ -15,7 +15,7 @@ class DummyController extends AbstractController
 
     public function __construct(
         #[Autowire('%kernel.project_dir%/data/')] private string $dataDir,
-        private PixieService $PixieService
+        private PixieService $pixieService
     )
     {
 
@@ -33,7 +33,7 @@ class DummyController extends AbstractController
         $products = json_decode(file_get_contents($fn), true);
         dd($products);
 
-        $kv = $this->PixieService->getStorageBox('dummy.Pixie', [
+        $kv = $this->pixieService->getStorageBox('dummy.Pixie', [
             'products' => 'sku,brand,category' // first key is text primary key by default
         ]);
         dd($kv, $products);
@@ -58,7 +58,7 @@ class DummyController extends AbstractController
     ): Response
     {
         return $this->render('dummy/index.html.twig', [
-            'kv' => $this->PixieService->getStorageBox(self::Pixie_NAME)
+            'kv' => $this->pixieService->getStorageBox(self::Pixie_NAME)
         ]);
     }
 

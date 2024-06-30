@@ -28,7 +28,7 @@ class HeadlinesController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private CacheInterface $cache,
-        private PixieService $PixieService,
+        private PixieService $pixieService,
         private LibreTranslate $libreTranslate
     )
     {
@@ -56,14 +56,14 @@ class HeadlinesController extends AbstractController
         // idea: &&id|TEXT for primary key, e.g. imdb_id
 
         // we need version() to ignore this.
-        $kv = $this->PixieService->getStorageBox($fn, [
+        $kv = $this->pixieService->getStorageBox($fn, [
             'sources'=>'id|TEXT,category,language,country',
             'headlines'=>'id'
         ]);
         $kv->map([
 //            '^[A-Z]' => // snake_case, maybe by default?
         ], ['sources']);
-//        $kv = $PixieService->getStringBox($fn = 'x.db', [
+//        $kv = $pixieService->getStringBox($fn = 'x.db', [
 //            'trans'=>'locale',
 //        ]);
         if ($table) {
@@ -81,7 +81,7 @@ class HeadlinesController extends AbstractController
         CacheInterface $cache,
         SourceRepository $sourceRepository,
         ArticleRepository $articleRepository,
-        PixieService $PixieService,
+        PixieService $pixieService,
         string         $language = null): Response
     {
         return $this->render('headlines/index.html.twig', [
