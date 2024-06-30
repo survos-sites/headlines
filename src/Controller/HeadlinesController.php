@@ -8,8 +8,8 @@ use App\Repository\SourceRepository;
 use App\Service\NewsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Jefs42\LibreTranslate;
-use Survos\KeyValueBundle\Service\KeyValueService;
-use Survos\KeyValueBundle\StorageBox;
+use Survos\PixieBundle\Service\PixieService;
+use Survos\PixieBundle\StorageBox;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,7 +28,7 @@ class HeadlinesController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private CacheInterface $cache,
-        private KeyValueService $keyValueService,
+        private PixieService $PixieService,
         private LibreTranslate $libreTranslate
     )
     {
@@ -56,14 +56,14 @@ class HeadlinesController extends AbstractController
         // idea: &&id|TEXT for primary key, e.g. imdb_id
 
         // we need version() to ignore this.
-        $kv = $this->keyValueService->getStorageBox($fn, [
+        $kv = $this->PixieService->getStorageBox($fn, [
             'sources'=>'id|TEXT,category,language,country',
             'headlines'=>'id'
         ]);
         $kv->map([
 //            '^[A-Z]' => // snake_case, maybe by default?
         ], ['sources']);
-//        $kv = $keyValueService->getStringBox($fn = 'x.db', [
+//        $kv = $PixieService->getStringBox($fn = 'x.db', [
 //            'trans'=>'locale',
 //        ]);
         if ($table) {
@@ -81,7 +81,7 @@ class HeadlinesController extends AbstractController
         CacheInterface $cache,
         SourceRepository $sourceRepository,
         ArticleRepository $articleRepository,
-        KeyValueService $keyValueService,
+        PixieService $PixieService,
         string         $language = null): Response
     {
         return $this->render('headlines/index.html.twig', [

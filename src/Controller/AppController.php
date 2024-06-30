@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Tax;
-use Survos\KeyValueBundle\Service\KeyValueService;
+use Survos\PixieBundle\Service\PixieService;
 use Survos\WikiBundle\Service\WikiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,11 +26,11 @@ class AppController extends AbstractController
      */
     #[Route('/wiki', name: 'app_wiki')]
     public function wiki(
-        KeyValueService $keyValueService,
+        PixieService $PixieService,
         WikiService $wikiService
     ): Response
     {
-        $kv = $keyValueService->getStorageBox('moma.pixy');
+        $kv = $PixieService->getStorageBox('moma.Pixie');
         $kv->select('artist');
         foreach ($kv->iterate(where: [
 //            'wiki_qid'=>

@@ -3,11 +3,11 @@
 namespace App\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
-use Survos\KeyValueBundle\Service\KeyValueService;
+use Survos\PixieBundle\Service\PixieService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use PHPUnit\Framework\Attributes\TestWithJson;
 
-class PixyWriterTest extends KernelTestCase
+class PixieWriterTest extends KernelTestCase
 {
 
 //    #[Test]
@@ -18,7 +18,7 @@ class PixyWriterTest extends KernelTestCase
         $this->assertSame($a, 1);
         $this->assertSame($a, 2);
         $kernel = self::bootKernel();
-        $kvService = static::getContainer()->get(KeyValueService::class);
+        $kvService = static::getContainer()->get(PixieService::class);
         $kv = $kvService->getStorageBox('movie');
 //        $kv->getIndexDefinitions()
     }

@@ -127,6 +127,9 @@
     "survos/maker-bundle": {
         "version": "1.5.208"
     },
+    "survos/pixie-bundle": {
+        "version": "1.5.242"
+    },
     "survos/simple-datatables-bundle": {
         "version": "1.5.240"
     },

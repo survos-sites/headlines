@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use Survos\KeyValueBundle\Event\CsvHeaderEvent;
+use Survos\PixieBundle\Event\CsvHeaderEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Form\Event\SubmitEvent;
 

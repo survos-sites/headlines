@@ -25,7 +25,7 @@
         "survos/api-grid-bundle": "*",
         "survos/bootstrap-bundle": "^1.5",
         "survos/command-bundle": "^1.5",
-        "survos/key-value-bundle": "^1.5",
+        "survos/pixie-bundle": "^1.5",
         "survos/libre-translate-bundle": "^1.5",
         "survos/simple-datatables-bundle": "^1.5",
         "survos/wiki-bundle": "^1.5",

@@ -13,12 +13,12 @@
         {% for p in ['moma','education', 'cma', 'anki','fake-jobs','mexmus','imdb'] %}
         <li>
                 <b>{{ p }}</b>
-                <a href="{{ path('pixy_homepage', {pixyName: p ~ '.pixy'}) }}">Show</a>
+                <a href="{{ path('pixie_homepage', {pixieName: p ~ '.pixy'}) }}">Show</a>
 
 
             IMPORT:
             {% for limit in [50, 500, 5000, 50000, 0] %}
-                <a href="{{ path('pixy_import', {limit: limit, pixyName: p ~ '.pixy'}) }}">{{ limit }}</a>
+                <a href="{{ path('pixie_import', {limit: limit, pixieName: p ~ '.pixy'}) }}">{{ limit }}</a>
             {% endfor %}
         </li>
 

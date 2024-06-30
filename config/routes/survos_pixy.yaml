@@ -1,18 +1,3 @@
-survos_key_value:
-#  resource:
-#    path: ../../vendor/survos/key-value-bundle/src/Controller/
-#    namespace: Survos\KeyValue\Controller
-#  type: attribute
-#
-#
-#survos_key_value:
-  resource: '@SurvosKeyValueBundle/config/routes.php'
-##  resource: '@SurvosKeyValue/Controller/PixyController.php'
-  prefix: '/pixy'
-##  type: attribute
-##    prefix: /grid
-##    #  type: attribute
-##
-##    resource:
-##      path: ../../vendor/survos/api-grid-bundle/src/Controller/
-##      namespace: Survos\ApiGrid\Controller
+#survos_flickr:
+#  resource: '@SurvosFlickrBundle/config/routes.php'
+#  prefix: '/flickr'

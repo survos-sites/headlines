@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Survos\KeyValueBundle\Service\KeyValueService;
+use Survos\PixieBundle\Service\PixieService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,11 +11,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/dummy', name: 'dummy_')]
 class DummyController extends AbstractController
 {
-    const PIXY_NAME='dummy';
+    const Pixie_NAME='dummy';
 
     public function __construct(
         #[Autowire('%kernel.project_dir%/data/')] private string $dataDir,
-        private KeyValueService $keyValueService
+        private PixieService $PixieService
     )
     {
 
@@ -33,7 +33,7 @@ class DummyController extends AbstractController
         $products = json_decode(file_get_contents($fn), true);
         dd($products);
 
-        $kv = $this->keyValueService->getStorageBox('dummy.pixy', [
+        $kv = $this->PixieService->getStorageBox('dummy.Pixie', [
             'products' => 'sku,brand,category' // first key is text primary key by default
         ]);
         dd($kv, $products);
@@ -58,7 +58,7 @@ class DummyController extends AbstractController
     ): Response
     {
         return $this->render('dummy/index.html.twig', [
-            'kv' => $this->keyValueService->getStorageBox(self::PIXY_NAME)
+            'kv' => $this->PixieService->getStorageBox(self::Pixie_NAME)
         ]);
     }
 
