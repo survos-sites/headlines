@@ -10,7 +10,7 @@
         </li>
 
         {# deal with headlines separately, license, JSON, etc. #}
-        {% for p in ['moma','education', 'cma', 'anki','fake-jobs'] %}
+        {% for p in ['moma','education', 'cma', 'anki','fake-jobs','mexmus','imdb'] %}
         <li>
                 <b>{{ p }}</b>
                 <a href="{{ path('pixy_homepage', {pixyName: p ~ '.pixy'}) }}">Show</a>

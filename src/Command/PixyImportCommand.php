@@ -6,6 +6,7 @@ use League\Csv\Reader;
 use Psr\Log\LoggerInterface;
 use Survos\KeyValueBundle\Service\KeyValueService;
 use Survos\KeyValueBundle\Service\PixyImportService;
+use Survos\KeyValueBundle\StorageBox;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -26,21 +27,24 @@ final class PixyImportCommand extends InvokableServiceCommand
     use RunsProcesses;
 
     public function __construct(
-        private LoggerInterface $logger,
+        private LoggerInterface       $logger,
         private ParameterBagInterface $bag)
     {
 
         parent::__construct();
     }
+
     public function __invoke(
-        IO $io,
-        KeyValueService $keyValueService,
-        PixyImportService $pixyImportService,
-        #[Argument(description: '(string)')]
-        string $dirOrFilename = '',
+        IO                                                                      $io,
+        KeyValueService                                                         $keyValueService,
+        PixyImportService                                                       $pixyImportService,
+        #[Argument(description: '(string)')] string                             $dirOrFilename = '',
         #[Option(description: 'conf filename, default to directory name of first argument, or pixy.conf', shortcut: 'c')]
-        string $config = 'pixy.conf',
-    ): void {
+        string                                                                  $config = 'pixy.conf',
+        #[Option(description: "max number of records per table to import")] int $limit = 0,
+        #[Option(description: "Batch size for commit")] int                     $batch = 500
+    ): void
+    {
 
         // idea: if conf doesn't exist, require a directory name and create it, a la rector
 
@@ -73,29 +77,17 @@ final class PixyImportCommand extends InvokableServiceCommand
         $finder = new Finder();
 
         $map = [];
-        $fileMap=[]; // from a csv file to a specific table format.
+        $fileMap = []; // from a csv file to a specific table format.
 
-        $pixyImportService->import($configData, $pixyDbName);
-
-        if (0) {
-
-            // pixydb? phixy.db?
-            $csv = Reader::createFromPath($fn, 'r');
-            $csv->setHeaderOffset(0); //set the CSV header offset
-
-            $headers = $kv->mapHeader($csv->getHeader());
-            $kv->beginTransaction();
-            assert(count($headers) == count(array_unique($headers)), json_encode($headers));
-            foreach ($csv->getRecords($headers) as $idx => $row) {
-                $kv->set($row);
-//                if ($idx > 100) break;
-//            dd($kv->get($row['id']));
-//            dump($row); break;
-            }
-            $kv->commit();
-        }
-
-
+        $pixyImportService->import($configData, $pixyDbName, limit: $limit,
+            callback: function ($row, $idx, StorageBox $kv) use ($batch) {
+                if (($idx % $batch) == 0) {
+                    $this->logger->info("Saving $batch, now at $idx");
+                    $kv->commit();
+                    $kv->beginTransaction();
+                };
+                return true;
+            });
         $io->success('pixy:import success ' . $pixyDbName);
     }
 }

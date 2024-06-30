@@ -2,7 +2,8 @@ version: 1.1
 source:
     notes: |
         tsv, with some sed originally
-    dir: /home/tac/g/survos/anki/data
+    dir: /imdb/
+    locale: en
     include: /*.tsv/
     url: https://dl.opensubtitles.org/addons/export/
     # imdb: https://datasets.imdbws.com/
@@ -16,27 +17,27 @@ tables:
             - type
             - year
             - minutes|int
-#            - genre
+            #            - genre
             - is_adult|bool
         # these are the column rules
         rules:
-#            /accession_number/: code
+            #            /accession_number/: code
             /tconst/: code
             /titleType/: type
             /startYear/: year
             /primaryTitle/: title
-            /runtimeMinutes/: minutes # hmm, minutes|int seems better, without index
+            /runtimeMinutes/: minutes # hmm, minutes:int minutes:&int
             /isAdult/: is_adult
             # by default, parse if it starts with [ or {
-#            /genres,/: genre
-#            /artists[{}]/: artists
-#            /dimensions{}/: dimensions
+            #            /genres,/: genre
+            #            /artists[{}]/: artists
+            #            /dimensions{}/: dimensions
             # from https://csv.thephpleague.com/9.0/writer/
-#            $formatter = function (array $row): array {
-#                return array_map('strtoupper', $row);
-#    };
-#        $writer = Writer::createFromFileObject(new SplTempFileObject());
-#        $writer->addFormatter($formatter);
+        #            $formatter = function (array $row): array {
+        #                return array_map('strtoupper', $row);
+        #    };
+        #        $writer = Writer::createFromFileObject(new SplTempFileObject());
+        #        $writer->addFormatter($formatter);
         # maybe someday: https://symfony.com/doc/current/components/expression_language.html
         formatter:
             //: # match everything
