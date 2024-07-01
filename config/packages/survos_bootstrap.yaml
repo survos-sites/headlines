@@ -4,7 +4,7 @@ survos_bootstrap:
       login: app_login
       logout: app_logout
       register: app_register
-      homepage: headlines_homepage
+      homepage: app_homepage
   menu_options:
       frontPage: false
       showAppMenu: false

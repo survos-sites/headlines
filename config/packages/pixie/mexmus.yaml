@@ -1,6 +1,8 @@
 version: 1.1
 source:
-    dir: mexmus
+    url: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json
+    # mkdir -p data/mexmus && curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" -o data/mexmus/0_museo_directorio.json
+#    dir: mexmus
 /*/:
     rules:
         /password/: '!'
