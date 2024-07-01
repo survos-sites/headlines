@@ -47,7 +47,7 @@ final class PixieImportCommand extends InvokableServiceCommand
     {
 
         // idea: if conf doesn't exist, require a directory name and create it, a la rector
-        if (empty($config)) {
+        if (empty($configCode)) {
             $configCode = pathinfo($dirOrFilename, PATHINFO_BASENAME);
         }
 
@@ -92,9 +92,10 @@ final class PixieImportCommand extends InvokableServiceCommand
 
         $progressBar = new ProgressBar($io->output());
 
-        $pixieImportService->import($configData, $pixieDbName, limit: $limit,
+        $pixieImportService->import($config, $pixieDbName, limit: $limit,
             callback: function ($row, $idx, StorageBox $kv) use ($batch, $progressBar) {
             $progressBar->advance();
+            dd($row);
                 if (($idx % $batch) == 0) {
                     $this->logger->info("Saving $batch, now at $idx");
                     $kv->commit();

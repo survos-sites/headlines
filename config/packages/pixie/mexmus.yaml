@@ -1,14 +1,22 @@
 version: 1.1
+source:
+    dir: mexmus
 /*/:
     rules:
         /password/: '!'
     ignore:
         - /password/i
+files:
+    /museo_directorio/: museos
 
-/museo_directorio/:
-    indexes: 'id|INTEGER,department,classification|department|year'
-    rules:
-        /ObjectID/: id
+tables:
+    museos:
+        indexes: 'id|INTEGER,nom_loc,tema,museo_tipo_de_propiedad'
+        rules:
+            /museo_id/: id
+            /museo_tematica_n1/: tema
+#            /nom_loc/: locl
+#            /museo_tipo_de_propiedad/: propiedad
 
 # parser rules for the data
 formatters:

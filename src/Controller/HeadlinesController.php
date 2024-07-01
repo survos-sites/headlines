@@ -40,7 +40,7 @@ class HeadlinesController extends AbstractController
     #[Route('/', 'app_landing_page')]
     public function landing(Request $request): Response
     {
-        return $this->redirectToRoute('headlines_homepage', [
+        return $this->redirectToRoute('app_homepage', [
             '_locale' => $request->getLocale(),
         ]);
 
@@ -75,7 +75,7 @@ class HeadlinesController extends AbstractController
 
 
     }
-    #[Route('/{_locale}/home/{language}', name: 'headlines_homepage')]
+    #[Route('/{_locale}/headlines/{language}', name: 'headlines_homepage')]
     public function home(
         LibreTranslate $libreTranslate,
         CacheInterface $cache,

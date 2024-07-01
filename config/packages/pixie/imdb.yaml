@@ -2,16 +2,16 @@ version: 1.1
 source:
     notes: |
         tsv, with some sed originally
-    dir: /imdb/
+    dir: data/imdb/
     locale: en
     include: /*.tsv/
     url: https://dl.opensubtitles.org/addons/export/
     # imdb: https://datasets.imdbws.com/
 
 files:
-    /title_basics/: movie
+    /title.basics/: movie
 tables:
-    title_basics:
+    movie:
         indexes:
             - code|text
             - type

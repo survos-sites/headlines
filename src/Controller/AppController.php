@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Tax;
 use Survos\PixieBundle\Service\PixieService;
 use Survos\WikiBundle\Service\WikiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Wikidata\Property;
 
+#[Route('/{_locale}')]
 class AppController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]

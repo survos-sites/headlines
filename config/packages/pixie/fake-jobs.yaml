@@ -3,7 +3,7 @@ version: 1.1
 # so we can import with just a conf file.
 source:
     installation: kaggle datasets download -d shivamb/real-or-fake-fake-jobposting-prediction
-    dir: /fake-jobs
+#    dir: /fake-jobs
     delimiter: ","
 files:
     # snake-case by default, e.g.

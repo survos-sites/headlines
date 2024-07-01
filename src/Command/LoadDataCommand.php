@@ -17,8 +17,8 @@ use Symfony\Component\Intl\Languages;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
-    name: 'app:load-data',
-    description: 'Add a short description for your command',
+    name: 'app:load-news',
+    description: 'Load news headlines and sources',
 )]
 class LoadDataCommand extends Command
 {
@@ -32,7 +32,7 @@ class LoadDataCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('q', InputArgument::OPTIONAL, 'Argument description')
+            ->addArgument('q', InputArgument::OPTIONAL, 'search term')
             ->addOption('source', 's', InputOption::VALUE_OPTIONAL, 'comma-delimited source languages', 'en')
             ->addOption('target', 't', InputOption::VALUE_OPTIONAL, 'comma-delimited target languages')
             ->addOption('load', null, InputOption::VALUE_NONE, 'load the sources first')

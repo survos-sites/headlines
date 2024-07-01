@@ -11,18 +11,17 @@
             <a href="{{ path('headlines_homepage') }}">Headlines</a>
         </li>
 
-        {{ dump(configs) }}
-
         {# deal with headlines separately, license, JSON, etc. #}
-        {% for p in ['moma','education', 'cma', 'anki','fake-jobs','mexmus','imdb'] %}
+        {% for p, config in configs %}
         <li>
                 <b>{{ p }}</b>
-                <a href="{{ path('pixie_homepage', {pixieName: p ~ '.pixy'}) }}">Show</a>
-
-
+                <a href="{{ path('pixie_homepage', {pixieCode: p}) }}">Show</a>
+            {{ dump(config) }}
+            {{ config.dataDir }}
+            {{ config.dataDirectory }}
             IMPORT:
             {% for limit in [50, 500, 5000, 50000, 0] %}
-                <a href="{{ path('pixie_import', {limit: limit, pixieName: p ~ '.pixy'}) }}">{{ limit }}</a>
+                <a href="{{ path('pixie_import', {limit: limit, pixieCode: p}) }}">{{ limit }}</a>
             {% endfor %}
         </li>
 
