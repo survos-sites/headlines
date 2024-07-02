@@ -61,7 +61,6 @@
         "symfony/yaml": "^7.0",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "webfactory/polyglot-bundle": "^4.1",
         "zenstruck/twig-service-bundle": "^1.5"
     },
     "config": {
