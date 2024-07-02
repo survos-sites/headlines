@@ -13,12 +13,13 @@ files:
 
 tables:
     museos:
-        indexes: 'id|INTEGER,nom_loc,tema,museo_tipo_de_propiedad'
+        indexes: 'id|INTEGER,nom_loc,tema,propiedad'
         rules:
             /museo_id/: id
+            /museo_nombre/: nombre
             /museo_tematica_n1/: tema
-#            /nom_loc/: locl
-#            /museo_tipo_de_propiedad/: propiedad
+            /nom_loc/: loc
+            /museo_tipo_de_propiedad/: propiedad
 
 # parser rules for the data
 formatters:
