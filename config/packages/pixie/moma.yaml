@@ -36,8 +36,8 @@ tables:
         #    text fields that are indexed are filterable (but can be disabled for alpha-sorting)
 
         properties:
-            - id:int
-            - artistBirthYear:int&
+            - id:int#
+            - artistBirthYear:int?min=1200
             - | 
                 department: 
                     filterable: true
@@ -52,7 +52,6 @@ tables:
 
 
         # additional columns
-        columns:
         indexes:
             - id|INTEGER
             - department

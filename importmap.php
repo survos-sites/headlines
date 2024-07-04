@@ -169,10 +169,10 @@ return [
         'type' => 'css',
     ],
     'simple-datatables' => [
-        'version' => '9.0.3',
+        'version' => '9.0.4',
     ],
     'simple-datatables/dist/style.min.css' => [
-        'version' => '9.0.3',
+        'version' => '9.0.4',
         'type' => 'css',
     ],
 ];

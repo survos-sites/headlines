@@ -2,16 +2,29 @@
 
 namespace App\Controller;
 
+use Survos\PixieBundle\Model\Config;
 use Survos\PixieBundle\Service\PixieService;
 use Survos\WikiBundle\Service\WikiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Yaml\Yaml;
 use Wikidata\Property;
 
 #[Route('/{_locale}')]
 class AppController extends AbstractController
 {
+
+    #[Route('/denormalize', name: 'app_denormalize')]
+    public function denormalize(PixieService $pixieService, DenormalizerInterface $denormalizer): Response
+    {
+        $configData = Yaml::parseFile($pixieService->getConfigFilename('moma'));
+        $config = $denormalizer->denormalize($configData, Config::class);
+        dd($config, $configData);
+
+    }
+
     #[Route('/', name: 'app_homepage')]
     public function index(PixieService $pixieService): Response
     {
