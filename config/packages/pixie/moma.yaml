@@ -29,9 +29,15 @@ tables:
             /ConstituentID/: artist_id  # this rule ONLY applied in artwork.  Bug
         # could come from SQL or created during the import
         # if there's a match, move the data here.  Everything else goes in _attributes
+
+        # By default
+        #    integers are not filterable, but are indexed, and sortable
+        #    integers can have bin rules
+        #    text fields that are indexed are filterable (but can be disabled for alpha-sorting)
+
         properties:
             - id:int
-            - artistBirthYear:int
+            - artistBirthYear:int&
             - | 
                 department: 
                     filterable: true
@@ -42,17 +48,11 @@ tables:
                     filterable: false
                     indexed: true
                     type: string
-                    
+                                
 
 
         # additional columns
         columns:
-            -   name: isAlive
-                type: bool
-                value: row.artistDeathYear == 0
-            -   name: decade
-                type: int
-                value: row.year % 10 == 0
         indexes:
             - id|INTEGER
             - department
