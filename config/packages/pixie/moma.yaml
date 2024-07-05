@@ -5,21 +5,13 @@ source:
     include: '*.json'
     ignore: '*.csv'
 files:
-    /Artists/: artist
     /Artworks/: artwork
+    /Artists/: artist
 tables:
-#    - name: artwork
-#      columns:
-#          - name: abc
-#      rules:
-#              /ObjectID/i: id
-#              /BeginDate/: artistBirthYear
-#
-#
-#x:
     artwork:
 #        indexes: 'id|int,department,classification,year|int'
         # column header rules.  Use rulesets?  Allow type or require in properties?
+        # rename and cast?  e.g. artYear:int
         rules:
             /ObjectID/i: id
             /BeginDate/: artistBirthYear
@@ -36,25 +28,30 @@ tables:
         #    text fields that are indexed are filterable (but can be disabled for alpha-sorting)
 
 #        // see https://www.doctrine-project.org/projects/doctrine-orm/en/2.17/reference/yaml-mapping.html
+        # https://dexie.org/docs/Version/Version.stores()#schema-syntax
+        # first property  is primary key
         properties:
-            - id:int#
+            - id:int# #primary key has #
             - artistBirthYear:int?min=1200
-            - name: department
-              filterable: true
-              indexed: true # same as index: artwork_department
-              type: string
+            - classification:string#
+            - department:string#
+            # @todo: error!
+#            - name: department
+#              type: string
+#              filterable: true
+#              indexed: true # same as index: artwork_department
             - name: birthYear
               filterable: false
               indexed: true
               type: string
 
-        # additional columns
-        indexes:
-            - id|INTEGER
-            - department
-            - classification
-            - art_year|INTEGER
-            - date_acquired|DATETIME # hint only, but can get during in the sql https://stackoverflow.com/questions/17227110/how-do-datetime-values-work-in-sqlite
+        # shortcut for indexes not defined in properties and are virtual columns from jSON
+#        indexes:
+#            - id|INTEGER
+#            - department
+#            - classification
+#            - art_year|INTEGER
+#            - date_acquired|DATETIME # hint only, but can get during in the sql https://stackoverflow.com/questions/17227110/how-do-datetime-values-work-in-sqlite
     #            - description|SEARCHTEXT,translatable
 
     artist:
@@ -65,12 +62,17 @@ tables:
             /EndDate/: deathYear
         # additional/enhanced properties, based on renamed rules
         properties:
-            - status:string
+            - id
+            - status:string#
+            - nationality#
+            - birthYear:int#
+            - deathYear:int
+#            - gender:enum('m','f','nb')
             - wiki_qid:string
         #             - '&qid'
         # used by renaming rules
-        indexes:
-            - id|INTEGER
-            - nationality
-            - birth_year|INTEGER
-            - gender
+#        indexes:
+#            - id|INTEGER
+#            - nationality
+#            - birth_year|INTEGER
+#            - gender

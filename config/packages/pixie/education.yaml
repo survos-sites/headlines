@@ -10,12 +10,18 @@ files:
 tables:
     # SIS ID,School SIS ID,Section Name,Section Number,Term SIS ID,Term Name,Term StartDate,Term EndDate,Course SIS ID,Course Name,Course Number,Course Description,Course Subject,Periods,Status
     section:
-        indexes: 'id|int,course_subject'
+        # can't indexed AND properties.  Maybe this should just be properties as a string.
+#        indexes: 'id|int,course_subject'
         # column header rules.  Use rulesets?
         rules:
             /^SIS ID$/: id # or teacher_id?
             /^Section Name$/: name # or teacher_id?
             /^School SIS ID$/: school_id #@school_id? @{school}?
+        properties:
+            - id:int
+            - course_subject:text  # && #add & to index? && for filterable?
+            - name #& #add &T to make translatable? &Label?  This will at least make it sortable
+            - school_id:int # relation!
         cast:
             /_id$/: int
             /^is_/: bool
@@ -31,6 +37,7 @@ tables:
             /^SIS ID$/: id # or teacher_id?
             /^School SIS ID$/: school_id #@school_id? @{school}?
             /State ID/: state_abbr
+        # this is the most succinct!
         indexes: 'id|int,status,title'
 
 

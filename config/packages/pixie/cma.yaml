@@ -13,11 +13,14 @@ files:
     /data/: artwork
 tables:
     artwork:
-        indexes:
-            - accession_number|text
-            - license
-            - technique
-            - culture
         rules:
-#            /accession_number/: code
+            /accession_number/: code
             /share_license_status/: license
+        properties:
+            - code
+            - license#
+#        indexes:
+#            - accession_number|text
+#            - license
+#            - technique
+#            - culture

@@ -16,14 +16,14 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
     '@hotwired/turbo' => [
-        'version' => '7.3.0',
+        'version' => '8.0.4',
     ],
     'bootstrap' => [
         'version' => '5.3.3',
@@ -40,44 +40,44 @@ return [
         'type' => 'css',
     ],
     'flag-icons' => [
-        'version' => '7.2.1',
+        'version' => '7.2.3',
     ],
     'flag-icons/css/flag-icons.min.css' => [
-        'version' => '7.2.1',
+        'version' => '7.2.3',
         'type' => 'css',
     ],
     'chart.js' => [
-        'version' => '3.9.1',
+        'version' => '4.4.3',
     ],
     'twig' => [
         'version' => '1.17.1',
     ],
     'locutus/php/strings/sprintf' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/strings/vsprintf' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/math/round' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/math/max' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/math/min' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/strings/strip_tags' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/datetime/strtotime' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/datetime/date' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'locutus/php/var/boolval' => [
-        'version' => '2.0.16',
+        'version' => '2.0.32',
     ],
     'axios' => [
         'version' => '1.7.2',
@@ -174,5 +174,8 @@ return [
     'simple-datatables/dist/style.min.css' => [
         'version' => '9.0.4',
         'type' => 'css',
+    ],
+    '@kurkle/color' => [
+        'version' => '0.3.2',
     ],
 ];

@@ -17,8 +17,6 @@ use Zenstruck\Console\InvokableServiceCommand;
 use Zenstruck\Console\IO;
 use Zenstruck\Console\RunsCommands;
 use Zenstruck\Console\RunsProcesses;
-use Symfony\Component\Finder\Finder;
-use function Symfony\Component\String\u;
 
 #[AsCommand('pixie:import', 'Import csv to Pixie, a file or directory of files"')]
 final class PixieImportCommand extends InvokableServiceCommand
@@ -51,17 +49,10 @@ final class PixieImportCommand extends InvokableServiceCommand
             $configCode = pathinfo($dirOrFilename, PATHINFO_BASENAME);
         }
 
-        $configFilename = $pixieService->getConfigDir() . "/$configCode.yaml";
-
-        if (!file_exists($configFilename)) {
-            // prompt for init to create it
-            dd($configFilename);
-        }
-
-        $config = new Config($configFilename);
-        $configData = Yaml::parseFile($configFilename);
+        $config = $pixieService->getConfig($configCode);
+        assert($config, $config->getConfigFilename());
         if (empty($dirOrFilename)) {
-            $dirOrFilename = $config->getDataDirectory();
+            $dirOrFilename = $pixieService->getSourceFilesDir($configCode);
         }
 
 //        dump($configData, $config->getVersion());
@@ -69,7 +60,7 @@ final class PixieImportCommand extends InvokableServiceCommand
 
         // Pixie databases go in datadir, not with their source? Or defined in the config
         if (!is_dir($dirOrFilename)) {
-            $io->error("set the directory in config or pass it as the first argument");
+            $io->error("$dirOrFilename does not exist.  set the directory in config or pass it as the first argument");
             return self::FAILURE;
         }
 
@@ -92,10 +83,10 @@ final class PixieImportCommand extends InvokableServiceCommand
 
         $progressBar = new ProgressBar($io->output());
 
-        $pixieImportService->import($config, $pixieDbName, limit: $limit,
+        $pixieImportService->import($configCode, $config, limit: $limit,
             callback: function ($row, $idx, StorageBox $kv) use ($batch, $progressBar) {
             $progressBar->advance();
-            dd($row);
+//            dd($row);
                 if (($idx % $batch) == 0) {
                     $this->logger->info("Saving $batch, now at $idx");
                     $kv->commit();

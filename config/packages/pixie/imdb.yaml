@@ -36,14 +36,6 @@ tables:
         #        $writer = Writer::createFromFileObject(new SplTempFileObject());
         #        $writer->addFormatter($formatter);
         # maybe someday: https://symfony.com/doc/current/components/expression_language.html
-        indexes:
-            - code|text
-            - type
-            - year
-            - minutes|int
-            #            - genre
-            - is_adult|bool
-        # these are the column rules
         formatter:
             //: # match everything
                 /\\N/: ''
