@@ -35,21 +35,18 @@ tables:
         #    integers can have bin rules
         #    text fields that are indexed are filterable (but can be disabled for alpha-sorting)
 
+#        // see https://www.doctrine-project.org/projects/doctrine-orm/en/2.17/reference/yaml-mapping.html
         properties:
             - id:int#
             - artistBirthYear:int?min=1200
-            - | 
-                department: 
-                    filterable: true
-                    indexed: true
-                    type: string
-            - |
-                birthYear: 
-                    filterable: false
-                    indexed: true
-                    type: string
-                                
-
+            - name: department
+              filterable: true
+              indexed: true # same as index: artwork_department
+              type: string
+            - name: birthYear
+              filterable: false
+              indexed: true
+              type: string
 
         # additional columns
         indexes:
