@@ -17,6 +17,7 @@ tables:
             /accession_number/: code
             /share_license_status/: license
         properties:
+            - id
             - code
             - license#
 #        indexes:
