@@ -8,8 +8,8 @@ source:
         and exhibitions in a JSON list, artist id.
         But it is more complicated to change property names of JSON
     dir: /home/tac/g/museado/data/cma # relative to data_dir
-    ignore: /report|json/
-#    include: /*.json/
+    ignore: /report|csv/
+    include: /*.json/
     github: https://github.com/ClevelandMuseumArt/openaccess
 
 files:
@@ -22,7 +22,7 @@ tables:
         properties:
             - id
             - code
-            - license#
+            - license:text#
 #        indexes:
 #            - accession_number|text
 #            - license
