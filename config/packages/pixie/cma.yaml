@@ -1,13 +1,14 @@
 version: 1.1
 source:
-    instructions: cd data && git clone git@github.com:ClevelandMuseumArt/openaccess.git cma && cd cma && git lfs pull
+    dir: /home/tac/data/cma
+    instructions: |
+            cd data && \ 
+            git clone git@github.com:ClevelandMuseumArt/openaccess.git cma && cd cma && \
+            git lfs pull --include=data.json
     notes: |
-        
-        
         The JSON feed has more and better data, e.g. measurements broken out,
         and exhibitions in a JSON list, artist id.
-        But it is more complicated to change property names of JSON
-    dir: /home/tac/g/museado/data/cma # relative to data_dir
+#    dir: /home/tac/g/museado/data/cma # relative to data_dir
     ignore: /report|csv/
     include: /*.json/
     github: https://github.com/ClevelandMuseumArt/openaccess
