@@ -30,4 +30,5 @@ return [
     Survos\SimpleDatatables\SurvosSimpleDatatablesBundle::class => ['all' => true],
     Zenstruck\Twig\ZenstruckTwigServiceBundle::class => ['all' => true],
     Survos\WikiBundle\SurvosWikiBundle::class => ['all' => true],
+    Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
 ];
