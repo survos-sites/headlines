@@ -31,4 +31,6 @@ return [
     Zenstruck\Twig\ZenstruckTwigServiceBundle::class => ['all' => true],
     Survos\WikiBundle\SurvosWikiBundle::class => ['all' => true],
     Survos\WorkflowBundle\SurvosWorkflowBundle::class => ['all' => true],
+    KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
+    Survos\AuthBundle\SurvosAuthBundle::class => ['all' => true],
 ];

@@ -1,7 +1,12 @@
 version: 1.1
 source:
+    required_files: # in dir:
+        - 0_museo_directorio.json
+    bash: |
+        mkdir -p data/mexmus && 
+        \ curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" 
+        \ -o data/mexmus/0_museo_directorio.json
     url: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json
-    # mkdir -p data/mexmus && curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" -o data/mexmus/0_museo_directorio.json
 #    dir: mexmus
 /*/:
     rules:
@@ -13,13 +18,23 @@ files:
 
 tables:
     museos:
-        indexes: 'id|INTEGER,nom_loc,tema,propiedad'
+        workflow: MexMusWorkflow
         rules:
             /museo_id/: id
             /museo_nombre/: nombre
             /museo_tematica_n1/: tema
-            /nom_loc/: loc
+            /nom_loc/: localidad
+            /nom_ent/: estado
+            /nom_mun/: municipio
             /museo_tipo_de_propiedad/: propiedad
+        properties:
+            - id:int
+            - marking:text#
+            - localidad:text#
+            - estado:text#
+            - municipio:text#
+            - tema:text#
+            - propiedad:text#
 
 # parser rules for the data
 formatters:

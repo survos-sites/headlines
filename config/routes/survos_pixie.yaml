@@ -1,18 +1,3 @@
 survos_pixie:
-#  resource:
-#    path: ../../vendor/survos/key-value-bundle/src/Controller/
-#    namespace: Survos\KeyValue\Controller
-#  type: attribute
-#
-#
-#survos_pixie:
-  resource: '@SurvosPixieBundle/config/routes.php'
-##  resource: '@SurvosKeyValue/Controller/PixyController.php'
+  resource: '@SurvosPixieBundle/config/routes.yaml'
   prefix: '/pixie'
-##  type: attribute
-##    prefix: /grid
-##    #  type: attribute
-##
-##    resource:
-##      path: ../../vendor/survos/api-grid-bundle/src/Controller/
-##      namespace: Survos\ApiGrid\Controller
