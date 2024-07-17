@@ -1,0 +1,41 @@
+code: cleveland
+version: 1.1
+source:
+  instructions: |
+    cd data && \ 
+    git clone git@github.com:ClevelandMuseumArt/openaccess.git cleveland && cd cleveland && \
+    git lfs pull --include=data.json
+  notes: |
+    The JSON feed has more and better data, e.g. measurements broken out,
+    and exhibitions in a JSON list, artist id.
+    But it is more complicated to change property names of JSON
+  dir: /home/tac/data/cleveland
+  ignore: /csv/
+  include: "*.json"
+  github: https://github.com/ClevelandMuseumArt/openaccess
+
+files:
+  /data/: artwork
+tables:
+  images:
+    properties:
+      - id:int
+      - local # relative to datadir?  Need to download to upload to flickr, but not to s3
+      - status:text#
+
+  artwork:
+    rules:
+      /accession_number/: code # ugh, this is an array!
+      /share_license_status/: license
+    properties:
+      - id:int
+      - code:text
+      - license:text#
+      - technique:text#
+      - current_location:text#
+      - type:text#
+#        indexes:
+#            - accession_number|text
+#            - license
+#            - technique
+#            - culture

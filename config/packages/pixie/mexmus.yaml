@@ -17,6 +17,12 @@ files:
     /museo_directorio/: museos
 
 tables:
+    # created by the RowEvent POST_LOAD
+    estado:
+        properties:
+            - id:int
+            - marking:text#
+            - name:text # unique, label, etc.
     museos:
         workflow: MexMusWorkflow
         rules:
@@ -24,14 +30,15 @@ tables:
             /museo_nombre/: nombre
             /museo_tematica_n1/: tema
             /nom_loc/: localidad
-            /nom_ent/: estado
+            /nom_ent/: estado_label
             /nom_mun/: municipio
             /museo_tipo_de_propiedad/: propiedad
         properties:
             - id:int
             - marking:text#
             - localidad:text#
-            - estado:text#
+#            - estado:rel@estado #manyToOne@estado via the pk
+            - estado_label:text#
             - municipio:text#
             - tema:text#
             - propiedad:text#

@@ -1,6 +1,6 @@
 version: '1.1'
 source:
-    dir: data/moma/ # relative to project dir.  data_dir is only for the default, when this doesn't exist
+#    dir: data/moma/ # relative to project dir.  data_dir is only for the default, when this doesn't exist
     locale: en
     include: '*.json'
     ignore: '*.csv'
@@ -31,7 +31,7 @@ tables:
         # https://dexie.org/docs/Version/Version.stores()#schema-syntax
         # first property  is primary key
         properties:
-            - id:int# #primary key has #
+            - id:int #primary key has #
             - artistBirthYear:int?min=1200
             - classification:string#
             - department:string#
@@ -58,15 +58,15 @@ tables:
         # renaming rules
         rules:
             /ConstituentID/: id
-            /BeginDate/: birthYear
-            /EndDate/: deathYear
+            /BeginDate/: birth_year
+            /EndDate/: death_year
         # additional/enhanced properties, based on renamed rules
         properties:
-            - id
-            - status:string#
-            - nationality#
-            - birthYear:int#
-            - deathYear:int
+            - id:int # pk needs type!
+#            - status:string#
+            - nationality:text#
+            - birth_year:int#
+            - death_year:int
 #            - gender:enum('m','f','nb')
             - wiki_qid:string
         #             - '&qid'
