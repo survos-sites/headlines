@@ -24,7 +24,7 @@ final class ValidateWorkflow
     #[AsEventListener(event: 'workflow.transition')]
     public function onWorkflowTransition(TransitionEvent $event): void
     {
-        dd($event);
+//        dd($event);
         // ...
     }
 }

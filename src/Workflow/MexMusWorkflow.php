@@ -35,15 +35,18 @@ final class MexMusWorkflow implements MexMusWorkflowInterface
     {
         switch ($event->getTransition()->getName()) {
             case self::TRANSITION_ENHANCE:
-                dd($event->getSubject());
+//                dd($event->getSubject());
                 // dispatch
                 break;
         }
     }
 
     #[AsEventListener(event: RowEvent::class)]
-    public function onRowEvent(RowEvent $event): void
+    public function onMexMusRowEvent(RowEvent $event): void
     {
+        if ($event->configCode !== 'mexmus') {
+            return;
+        }
         static $mun = []; // the array of municipios
         static $estado = []; // the array of states
         $row = $event->row;
@@ -51,7 +54,17 @@ final class MexMusWorkflow implements MexMusWorkflowInterface
             case $event::POST_LOAD:
                 ksort($mun);
                 ksort($estado);
-                dd($mun, $estado);
+                $kv = $event->storageBox;
+                $kv->select($estadoTableName ='estado');
+                $pk = $kv->getPrimaryKey($estadoTableName);
+                $kv->beginTransaction();
+                foreach ($estado as $id=>$name) {
+                    $kv->set([
+                        $pk => $id,
+                        'name' => $name
+                    ]);
+                }
+                $kv->commit();
                 break;
             case $event::LOAD:
                 if ($facebook = $row['facebook']??null) {
@@ -60,7 +73,7 @@ final class MexMusWorkflow implements MexMusWorkflowInterface
 //                    https://www.facebook.com/MuseoGuadalupePosada?fref=ts
                 }
                 $mun[$row['municipio_id']] = $row['municipio'];
-                $estado[$row['estado_id']] = $row['estado'];
+                $estado[$row['estado_id']] = $row['estado_label'];
 //                dd($row, $event->tableName, $event->key, $mun);
                 // create the
         }
