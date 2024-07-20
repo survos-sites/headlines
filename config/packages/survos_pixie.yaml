@@ -9,6 +9,7 @@ survos_pixie:
   data_root: data
   # location of the .config.yaml files
   config_dir: config/packages/pixie
+  purge_before_import: true
 
   # data is defined in the .conf files
 
