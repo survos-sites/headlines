@@ -1,0 +1,63 @@
+code: walters
+version: 1.1
+source:
+  instructions: |
+    cd data && \ 
+    git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git walters && cd walters
+  notes: |
+
+  dir: /home/tac/data/walters
+  include: "*.csv"
+  ignore: ['media.csv', 'relationships.csv']
+  github: https://github.com/WaltersArtMuseum/api-thewalters-org
+
+files:
+  /art/: art
+  /creators/: person
+  /collections/: collection
+  /locations/: location
+  /exhibitions/: exhibition
+tables:
+  exhibition:
+    rules:
+      /ExhibitionID/: id
+    properties:
+      - id:int
+  collection:
+    rules:
+      /CollectionID/: id
+      /CollectionName/: label
+      /CollDescription/: description
+    properties:
+      - id:int
+  person:
+    rules:
+      /ObjectID/: id
+    properties:
+      - id:int
+      - gender:text#
+  location:
+    rules:
+      /LocationID/: id
+    properties:
+      - id:int
+      - site:text#
+      - floor:text#
+  art:
+    rules:
+      /ObjectID/: id
+    properties:
+      - id:int
+      - marking:text#
+      - classification:text#
+      - medium:text#
+      - style:text#
+      - culture:text#
+      - collection_id:text#
+#  image:
+#    properties:
+#      - id:int
+#      - local # relative to datadir?  Need to download to upload to flickr, but not to s3
+#      - status:text#
+#      - marking:text
+
