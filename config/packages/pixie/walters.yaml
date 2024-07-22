@@ -36,6 +36,7 @@ tables:
     properties:
       - id:int
       - gender:text#
+      - marking:text#
   location:
     rules:
       /LocationID/: id
