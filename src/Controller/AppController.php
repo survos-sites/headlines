@@ -47,7 +47,7 @@ class AppController extends AbstractController
         WikiService $wikiService
     ): Response
     {
-        $kv = $pixieService->getStorageBox('moma.Pixie');
+        $kv = $pixieService->getStorageBox('moma');
         $kv->select('artist');
         foreach ($kv->iterate(where: [
 //            'wiki_qid'=>
