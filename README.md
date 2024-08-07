@@ -18,7 +18,7 @@ survos_pixie:
 ## Developer Installation
 
 ```bash
-git clone git@github.com:survos-sites/pixy-demo.git && cd pixy-demo
+git clone git@github.com:survos-sites/headlines.git && cd headlines
 composer install
 symfony check:req
 bin/console doctrine:schema:update --force --complete

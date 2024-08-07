@@ -178,4 +178,7 @@ return [
     '@kurkle/color' => [
         'version' => '0.3.2',
     ],
+    'apexcharts' => [
+        'version' => '3.52.0',
+    ],
 ];
