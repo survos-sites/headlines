@@ -20,19 +20,26 @@ survos_pixie:
 First, install the survos packages, since pixie is a bundle
 
 ```bash
-git clone git@github.com:survos/survos ../survos
+git clone git@github.com:survos/survos survos
+git clone git@github.com:survos-sites/headlines.git
 ```
 
 Install the app in the same directory as survos.
 
 ```bash
-  git clone git@github.com:survos-sites/headlines.git && cd headlines
+cd headlines
 composer install
 ../survos/link . 
 symfony check:req
 bin/console doctrine:schema:update --force --complete
+
+mkdir -p data/mexmus 
+curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" -o data/mexmus/0_museo_directorio.json
+bin/console pixie:import mexmus
+
 symfony server:start -d
 symfony open:local --path /pixie/pixie
+symfony open:local --path /pixie/pixie/property/mexmus/museos/tema
 ```
 
 
