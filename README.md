@@ -27,8 +27,8 @@ Install the app in the same directory as survos.
 
 ```bash
   git clone git@github.com:survos-sites/headlines.git && cd headlines
-../survos/link . 
 composer install
+../survos/link . 
 symfony check:req
 bin/console doctrine:schema:update --force --complete
 symfony server:start -d
