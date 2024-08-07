@@ -17,15 +17,25 @@ survos_pixie:
 
 ## Developer Installation
 
+First, install the survos packages, since pixie is a bundle
+
 ```bash
-git clone git@github.com:survos-sites/headlines.git && cd headlines
+git clone git@github.com:survos/survos ../survos
+```
+
+Install the app in the same directory as survos.
+
+```bash
+  git clone git@github.com:survos-sites/headlines.git && cd headlines
+../survos/link . 
 composer install
 symfony check:req
 bin/console doctrine:schema:update --force --complete
 symfony server:start -d
-# search for Microsoft in en and es feeds
-symfony open:local
+symfony open:local --path /pixie/pixie
 ```
+
+
 
 Download the data, though eventually the conf files should have this!
 
