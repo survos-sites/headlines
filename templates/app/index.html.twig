@@ -2,6 +2,11 @@
 
 {% block title %}Hello AppController!{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+    </style>
+{% endblock %}
 {% block body %}
 
     <h1>{{ dir }}</h1>
