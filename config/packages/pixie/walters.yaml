@@ -2,8 +2,10 @@ code: walters
 version: 1.1
 source:
   instructions: |
-    cd data && \ 
+    cd data
     git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git walters && cd walters
+    cd ..
+    bin/console pixie:import walters --limit 1000
   notes: |
 
   dir: /home/tac/data/walters
@@ -21,15 +23,21 @@ tables:
   exhibition:
     rules:
       /ExhibitionID/: id
+      /ExhibitionDisplayDate/: date
+      /LocationID/: location_id
     properties:
       - id:int
+      - date:text#
+      - location_id:int# #@todo: rel.location
   collection:
     rules:
       /CollectionID/: id
       /CollectionName/: label
       /CollDescription/: description
+      /NumObjects/: object_count
     properties:
       - id:int
+      - object_count:int#
   person:
     rules:
       /ObjectID/: id
