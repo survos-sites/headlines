@@ -8,7 +8,7 @@ source:
     bin/console pixie:import walters --limit 1000
   notes: |
 
-  dir: /home/tac/data/walters
+#  dir: /home/tac/data/walters
   include: "*.csv"
   ignore: ['media.csv', 'relationships.csv']
   github: https://github.com/WaltersArtMuseum/api-thewalters-org
