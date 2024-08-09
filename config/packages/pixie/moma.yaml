@@ -4,6 +4,8 @@ source:
     locale: en
     include: '*.json'
     ignore: '*.csv'
+    links:
+        github: https://github.com/MuseumofModernArt/collection
 files:
     /Artworks/: artwork
     /Artists/: artist

@@ -11,7 +11,9 @@ source:
 #  dir: /home/tac/data/walters
   include: "*.csv"
   ignore: ['media.csv', 'relationships.csv']
-  github: https://github.com/WaltersArtMuseum/api-thewalters-org
+  links:
+    github: https://github.com/WaltersArtMuseum/api-thewalters-org
+    website: https://thewalters.org/
 
 files:
   /art/: art
