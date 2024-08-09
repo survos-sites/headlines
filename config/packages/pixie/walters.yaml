@@ -75,3 +75,7 @@ tables:
 #      - status:text#
 #      - marking:text
 
+members:
+  - email: tacman@gmail.com
+    roles: PROJECT_ADMIN
+
