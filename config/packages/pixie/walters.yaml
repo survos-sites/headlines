@@ -12,8 +12,11 @@ source:
   include: "*.csv"
   ignore: ['media.csv', 'relationships.csv']
   links:
-    github: https://github.com/WaltersArtMuseum/api-thewalters-org
     website: https://thewalters.org/
+    github: https://github.com/WaltersArtMuseum/api-thewalters-org
+    flickr: https://flickr.com/photos/museado/albums/72177720319041729/
+    twitter: https://twitter.com/walters_museum
+    facebook: https://www.facebook.com/thewaltersartmuseum/
 
 files:
   /art/: art
