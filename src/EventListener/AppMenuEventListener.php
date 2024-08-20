@@ -41,6 +41,7 @@ final class AppMenuEventListener implements KnpMenuHelperInterface
         $options = $event->getOptions();
 
                 $this->add($menu, 'app_wiki');
+                $this->add($menu, 'pixie_browse_configs');
                 $this->add($menu, 'dummy_import');
                 $this->add($menu, 'dummy_index');
         // for nested menus, don't add a route, just a label, then use it for the argument to addMenuItem

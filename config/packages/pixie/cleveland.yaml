@@ -9,7 +9,7 @@ source:
     The JSON feed has more and better data, e.g. measurements broken out,
     and exhibitions in a JSON list, artist id.
     But it is more complicated to change property names of JSON
-  dir: /home/tac/data/cleveland
+  dir: ../data/cleveland
   ignore: /csv/
   include: "*.json"
   github: https://github.com/ClevelandMuseumArt/openaccess

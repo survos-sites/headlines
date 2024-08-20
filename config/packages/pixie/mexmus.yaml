@@ -3,9 +3,10 @@ source:
     required_files: # in dir:
         - 0_museo_directorio.json
     bash: |
-        mkdir -p data/mexmus && 
-        \ curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" 
-        \ -o data/mexmus/0_museo_directorio.json
+        mkdir -p data/mexmus && \
+        curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" \
+        -o data/mexmus/0_museo_directorio.json \
+        bin/console pixie:import mexmus
     url: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json
 #    dir: mexmus
 /*/:

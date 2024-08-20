@@ -29,11 +29,16 @@ class HeadlinesController extends AbstractController
         private EntityManagerInterface $entityManager,
         private CacheInterface $cache,
         private PixieService $pixieService,
-        private LibreTranslate $libreTranslate
+//        private LibreTranslate $libreTranslate
     )
     {
         $key = 'd3dec04bf26d4e678a8d02c458537ad2';
         $this->newsApi = new NewsApi($key);
+
+    }
+
+    private function getLibreTranslate(): LibreTranslate
+    {
 
     }
 
@@ -75,13 +80,15 @@ class HeadlinesController extends AbstractController
 
 
     }
+
+    // @todo: move to tran
     #[Route('/{_locale}/headlines/{language}', name: 'headlines_homepage')]
     public function home(
-        LibreTranslate $libreTranslate,
         CacheInterface $cache,
         SourceRepository $sourceRepository,
         ArticleRepository $articleRepository,
         PixieService $pixieService,
+        LibreTranslate $libreTranslate=null,
         string         $language = null): Response
     {
         return $this->render('headlines/index.html.twig', [
