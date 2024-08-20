@@ -28,13 +28,11 @@ class HeadlinesController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private CacheInterface $cache,
-        private PixieService $pixieService,
-//        private LibreTranslate $libreTranslate
+        private PixieService $pixieService
     )
     {
         $key = 'd3dec04bf26d4e678a8d02c458537ad2';
         $this->newsApi = new NewsApi($key);
-
     }
 
     private function getLibreTranslate(): LibreTranslate
