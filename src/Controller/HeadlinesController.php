@@ -37,6 +37,8 @@ class HeadlinesController extends AbstractController
 
     private function getLibreTranslate(): LibreTranslate
     {
+        // so that we can check if service is running.
+        return new LibreTranslate();
 
     }
 
