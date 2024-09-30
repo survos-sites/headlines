@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% set appShortName = 'Pixie' %}
-{% block logo_mini 'Mus' %}
-{% block logo_large 'Archive Connections' %}
+{% block logo_mini 'pixie' %}
+{% block logo_large 'Pixie Repo' %}
 
 {% block title %}{{ app.current_route|trans(domain='routes') }}{% endblock %}
 
@@ -97,7 +97,7 @@
     }) }}
 {% endblock %}
 
-{% block navbar %}
+{% block xxnavbar %}
     {#    {{ parent() }} #}
     navbar {{ _self }}
 

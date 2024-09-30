@@ -1,5 +1,11 @@
 code: cleveland
 version: 1.1
+imports:
+  - { resource: table/translation.yaml  }
+  - { resource: table/image.yaml  }
+  - { resource: table/obj.yaml  }
+#    - { resource: table/ }
+
 source:
   instructions: |
     cd data && \ 

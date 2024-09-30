@@ -9,13 +9,15 @@ survos_bootstrap:
       frontPage: false
       showAppMenu: false
       pixieCode: false
+      tableName: null
+      itemKey: null
 
   app:
     code: pixie
     abbr: <b>Pixie</b>Dash
   options:
     # consider https://startbootstrap.com/previews/simple-sidebar as another theme
-    theme: bootswatch
+    theme: tabler
     allow_login: true
     show_locale_dropdown: true
     offcanvas: end

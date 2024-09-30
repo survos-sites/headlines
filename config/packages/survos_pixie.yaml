@@ -10,6 +10,19 @@ survos_pixie:
   # location of the .config.yaml files
   config_dir: config/packages/pixie
   purge_before_import: true
-
-  # data is defined in the .conf files
+  pixies:
+    cleveland:
+      version: 1.1
+#      source:
+#        instructions: |
+#          cd data && \
+#          git clone git@github.com:ClevelandMuseumArt/openaccess.git cleveland && cd cleveland && \
+#          git lfs pull --include=data.json
+#        notes: |
+#          The JSON feed has more and better data, e.g. measurements broken out,
+#          and exhibitions in a JSON list, artist id.
+#          But it is more complicated to change property names of JSON
+#        dir: ../data/cleveland
+#        ignore: /csv/
+#        include: "*.json"
 
