@@ -17,3 +17,5 @@ api_platform:
     event_listeners_backward_compatibility_layer: false
     keep_legacy_inflector: false
     use_symfony_listeners: false # ??
+#    serializer:
+#        hydra_prefix: true

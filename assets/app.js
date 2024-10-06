@@ -22,3 +22,5 @@ import 'flag-icons/css/flag-icons.min.css';
 
 import './styles/app.css';
 // import 'vendor/survos/pixie-bundle/assets/style.css';
+
+import 'htmx.org';
