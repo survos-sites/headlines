@@ -21,15 +21,16 @@ First, install the survos packages, since pixie is a bundle
 
 ```bash
 git clone git@github.com:survos/survos survos
-git clone git@github.com:survos-sites/headlines.git
+cd survos && composer install
+cd ..
 ```
 
 Install the app in the same directory as survos.
 
 ```bash
+git clone git@github.com:survos-sites/headlines.git
 cd headlines
-composer install
-../survos/link . 
+../survos/link .
 symfony check:req
 bin/console doctrine:schema:update --force --complete
 
