@@ -1,0 +1,22 @@
+code: mdf
+version: 1.1
+source:
+  instructions: |
+    cd data && \ 
+    wget https://www.imls.gov/sites/default/files/2018_csv_museum_data_files.zip 
+    mkdir
+  notes: |
+    The data is pretty bad, all caps and such, but with cleaning could be okay
+  include: "*.csv"
+  links:
+      - https://www.imls.gov/research-evaluation/data-collection/museum-data-files
+      - https://catalog.data.gov/dataset/?tags=museums
+
+files:
+  # all files go to the same table
+  /mus/: museum
+tables:
+  museum:
+    properties:
+      - mid:int
+      - DISCIPLINE:text#
