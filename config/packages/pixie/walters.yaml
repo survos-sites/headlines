@@ -1,81 +1,85 @@
-code: walters
-version: 1.1
-source:
-  instructions: |
-    cd data
-    git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git walters && cd walters
-    cd ..
-    bin/console pixie:import walters --limit 1000
-  notes: |
+survos_pixie:
+  pixies:
+    walters:
+      code: walters
+      version: 1.1
+      source:
+        git:
+          repo: WaltersArtMuseum/api-thewalters-org
+        instructions: |
+          cd data
+          git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git walters && cd walters
+          cd ..
+          bin/console pixie:import walters --limit 1000
+        notes: |
 
-#  dir: /home/tac/data/walters
-  include: "*.csv"
-  ignore: ['media.csv', 'relationships.csv']
-  links:
-    website: https://thewalters.org/
-    github: https://github.com/WaltersArtMuseum/api-thewalters-org
-    flickr: https://flickr.com/photos/museado/albums/72177720319041729/
-    twitter: https://twitter.com/walters_museum
-    facebook: https://www.facebook.com/thewaltersartmuseum/
+      #  dir: /home/tac/data/walters
+        include: "*.csv"
+        ignore: ['media.csv', 'relationships.csv']
+        links:
+          website: https://thewalters.org/
+          flickr: https://flickr.com/photos/museado/albums/72177720319041729/
+          twitter: https://twitter.com/walters_museum
+          facebook: https://www.facebook.com/thewaltersartmuseum/
 
-files:
-  /art/: art
-  /creators/: person
-  /collections/: collection
-  /locations/: location
-  /exhibitions/: exhibition
-tables:
-  exhibition:
-    rules:
-      /ExhibitionID/: id
-      /ExhibitionDisplayDate/: date
-      /LocationID/: location_id
-    properties:
-      - id:int
-      - date:text#
-      - location_id:int# #@todo: rel.location
-  collection:
-    rules:
-      /CollectionID/: id
-      /CollectionName/: label
-      /CollDescription/: description
-      /NumObjects/: object_count
-    properties:
-      - id:int
-      - object_count:int#
-  person:
-    rules:
-      /ObjectID/: id
-    properties:
-      - id:int
-      - gender:text#
-      - marking:text#
-  location:
-    rules:
-      /LocationID/: id
-    properties:
-      - id:int
-      - site:text#
-      - floor:text#
-  art:
-    rules:
-      /ObjectID/: id
-    properties:
-      - id:int
-      - marking:text#
-      - classification:text#
-      - medium:text#
-      - style:text#
-      - culture:text#
-      - collection_id:text#
-#  image:
-#    properties:
-#      - id:int
-#      - local # relative to datadir?  Need to download to upload to flickr, but not to s3
-#      - status:text#
-#      - marking:text
+      files:
+        /art/: art
+        /creators/: person
+        /collections/: collection
+        /locations/: location
+        /exhibitions/: exhibition
+      tables:
+        exhibition:
+          rules:
+            /ExhibitionID/: id
+            /ExhibitionDisplayDate/: date
+            /LocationID/: location_id
+          properties:
+            - id:int
+            - date:text#
+            - location_id:int# #@todo: rel.location
+        collection:
+          rules:
+            /CollectionID/: id
+            /CollectionName/: label
+            /CollDescription/: description
+            /NumObjects/: object_count
+          properties:
+            - id:int
+            - object_count:int#
+        person:
+          rules:
+            /ObjectID/: id
+          properties:
+            - id:int
+            - gender:text#
+            - marking:text#
+        location:
+          rules:
+            /LocationID/: id
+          properties:
+            - id:int
+            - site:text#
+            - floor:text#
+        art:
+          rules:
+            /ObjectID/: id
+          properties:
+            - id:int
+            - marking:text#
+            - classification:text#
+            - medium:text#
+            - style:text#
+            - culture:text#
+            - collection_id:text#
+      #  image:
+      #    properties:
+      #      - id:int
+      #      - local # relative to datadir?  Need to download to upload to flickr, but not to s3
+      #      - status:text#
+      #      - marking:text
 
-members:
-  - email: tacman@gmail.com
-    roles: PROJECT_ADMIN
+      members:
+        - email: tacman@gmail.com
+          roles: PROJECT_ADMIN
 
