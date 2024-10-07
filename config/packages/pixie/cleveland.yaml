@@ -6,16 +6,21 @@ imports:
   - { resource: table/obj.yaml  }
 #    - { resource: table/ }
 
+
 source:
+  git:
+    repo: ClevelandMuseumArt/openaccess
+    lfs: true
+    lsf_include: data.json
   instructions: |
-    cd data && \ 
+    cd data && \
     git clone git@github.com:ClevelandMuseumArt/openaccess.git cleveland && cd cleveland && \
     git lfs pull --include=data.json
+    bin/console pixie:import cleveland
+
   notes: |
     The JSON feed has more and better data, e.g. measurements broken out,
     and exhibitions in a JSON list, artist id.
-    But it is more complicated to change property names of JSON
-  dir: ../data/cleveland
   ignore: /csv/
   include: "*.json"
   github: https://github.com/ClevelandMuseumArt/openaccess

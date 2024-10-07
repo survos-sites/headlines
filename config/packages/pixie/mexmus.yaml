@@ -1,49 +1,56 @@
-version: 1.1
-source:
-    required_files: # in dir:
-        - 0_museo_directorio.json
-    bash: |
-        mkdir -p data/mexmus && \
-        curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" \
-        -o data/mexmus/0_museo_directorio.json \
-        bin/console pixie:import mexmus
-    url: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json
-#    dir: mexmus
-/*/:
-    rules:
-        /password/: '!'
-    ignore:
-        - /password/i
-files:
-    /museo_directorio/: museos
+survos_pixie:
+    pixies:
+      mexmus:
+        code: mexmus
+        version: 1.1
+        source:
+#            build:
+#                -   action: fetch
+#                    source: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json
+#                    target: data/mexmus/0_museo_directorio.json
 
-tables:
-    # created by the RowEvent POST_LOAD
-    estado:
-        properties:
-            - id:int
-            - marking:text#
-            - name:text # unique, label, etc.
-    museos:
-        workflow: MexMusWorkflow
-        rules:
-            /museo_id/: id
-            /museo_nombre/: nombre
-            /museo_tematica_n1/: tema
-            /nom_loc/: localidad
-            /nom_ent/: estado_label
-            /nom_mun/: municipio
-            /museo_tipo_de_propiedad/: propiedad
-        properties:
-            - id:int
-            - marking:text#
-            - localidad:text#
-#            - estado:rel@estado #manyToOne@estado via the pk
-            - estado_label:text#
-            - municipio:text#
-            - tema:text#
-            - propiedad:text#
+            instructions: |
+                mkdir -p data/mexmus && \
+                curl "https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json" \
+                -o data/mexmus/0_museo_directorio.json \
+                bin/console pixie:import mexmus
+#
+#            url: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json
+        #    dir: mexmus
 
-# parser rules for the data
-formatters:
-    //
+#        /*/:
+#            rules:
+#                /password/: '!'
+#            ignore:
+#                - /password/i
+        files:
+            /museo_directorio/: museos
+
+        tables:
+            # created by the RowEvent POST_LOAD
+            estado:
+                properties:
+                    - id:int
+                    - marking:text#
+                    - name:text # unique, label, etc.
+            museos:
+                workflow: MexMusWorkflow
+                rules:
+                    /museo_id/: id
+                    /museo_nombre/: nombre
+                    /museo_tematica_n1/: tema
+                    /nom_loc/: localidad
+                    /nom_ent/: estado_label
+                    /nom_mun/: municipio
+                    /museo_tipo_de_propiedad/: propiedad
+                properties:
+                    - id:int
+                    - marking:text#
+                    - localidad:text#
+        #            - estado:rel@estado #manyToOne@estado via the pk
+                    - estado_label:text#
+                    - municipio:text#
+                    - tema:text#
+                    - propiedad:text#
+
+        # parser rules for the data
