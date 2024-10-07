@@ -1,5 +1,5 @@
 imports:
-#  - { resource: pixie/walters.yaml }
+  - { resource: pixie/walters.yaml }
   # If you want to import a whole directory:
   # - { resource: services/ }
 
