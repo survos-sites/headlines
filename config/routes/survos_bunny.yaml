@@ -1,0 +1,3 @@
+survos_bunny:
+  resource: '@SurvosBunnyBundle/config/routes.yaml'
+  prefix: '/bunny'
