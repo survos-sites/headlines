@@ -12,7 +12,7 @@ survos_pixie:
           target: data/mdf
           unzip: data/mdf
         - action: cmd
-          cmd: 'bunny:upload /data/%code'
+          cmd: 'bunny:upload /data/%code%'
       load:
         - action: cmd
           cmd: "bunny:download %code%"

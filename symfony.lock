@@ -105,6 +105,9 @@
     "survos/bootstrap-bundle": {
         "version": "1.5.240"
     },
+    "survos/bunny-bundle": {
+        "version": "1.5.360"
+    },
     "survos/command-bundle": {
         "version": "1.5",
         "recipe": {
