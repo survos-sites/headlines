@@ -25,13 +25,13 @@ survos_pixie:
           repo: ClevelandMuseumArt/openaccess
           lfs: true
           lsf_include: data.json
-#        build:
-#          - action: fetch
-#            source: https://www.imls.gov/sites/default/files/2018_csv_museum_data_files.zip
-#            target: data/mdf
-#            unzip: data/mdf
-#          - action: cmd
-#            cmd: 'bunny:upload /data/%code%'
+        build:
+          - action: fetch
+            source: https://www.imls.gov/sites/default/files/2018_csv_museum_data_files.zip
+            target: data/mdf
+            unzip: data/mdf
+          - action: cmd
+            cmd: 'bunny:download /data/larco.zip --zone=museado --unzip'
         instructions: |
           cd data && \
           git clone git@github.com:ClevelandMuseumArt/openaccess.git cleveland && cd cleveland && \
