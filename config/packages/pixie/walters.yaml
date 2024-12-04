@@ -1,85 +1,268 @@
+# walters.yaml
 survos_pixie:
+
   pixies:
     walters:
       code: walters
       version: 1.1
-      source:
-        git:
-          repo: WaltersArtMuseum/api-thewalters-org
-        instructions: |
-          cd data
-          git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git walters && cd walters
-          cd ..
-          bin/console pixie:import walters --limit 1000
-        notes: |
-
-      #  dir: /home/tac/data/walters
-        include: "*.csv"
-        ignore: ['media.csv', 'relationships.csv']
-        links:
-          website: https://thewalters.org/
-          flickr: https://flickr.com/photos/museado/albums/72177720319041729/
-          twitter: https://twitter.com/walters_museum
-          facebook: https://www.facebook.com/thewaltersartmuseum/
-
-      files:
-        /art/: art
-        /creators/: person
-        /collections/: collection
-        /locations/: location
-        /exhibitions/: exhibition
-      tables:
-        exhibition:
-          rules:
-            /ExhibitionID/: id
-            /ExhibitionDisplayDate/: date
-            /LocationID/: location_id
-          properties:
-            - id:int
-            - date:text#
-            - location_id:int# #@todo: rel.location
-        collection:
-          rules:
-            /CollectionID/: id
-            /CollectionName/: label
-            /CollDescription/: description
-            /NumObjects/: object_count
-          properties:
-            - id:int
-            - object_count:int#
-        person:
-          rules:
-            /ObjectID/: id
-          properties:
-            - id:int
-            - gender:text#
-            - marking:text#
-        location:
-          rules:
-            /LocationID/: id
-          properties:
-            - id:int
-            - site:text#
-            - floor:text#
-        art:
-          rules:
-            /ObjectID/: id
-          properties:
-            - id:int
-            - marking:text#
-            - classification:text#
-            - medium:text#
-            - style:text#
-            - culture:text#
-            - collection_id:text#
-      #  image:
-      #    properties:
-      #      - id:int
-      #      - local # relative to datadir?  Need to download to upload to flickr, but not to s3
-      #      - status:text#
-      #      - marking:text
+#      owner:
+#        country: us
 
       members:
         - email: tacman@gmail.com
           roles: PROJECT_ADMIN
+
+      source:
+        locale: en
+        country: us
+        git:
+          repo: WaltersArtMuseum/api-thewalters-org
+      #  propertyCodeRule: preserve
+#        collections:
+#          art:
+#            label: Art
+#            description: Art from Walters.
+        origin: github
+        label: Walters Museum
+        description: |
+          The Walters Art Museum is among America’s most distinctive museums, forging connections between people and art from cultures around the world and spanning seven millennia. Through its collections, exhibitions, and education programs, the Walters engages the City of Baltimore, Maryland, and audiences across the globe.
+
+        build: # downloads to raw and then creates /json
+#            git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git data/walters/raw
+#          - action: clone
+#            repo: git@github.com:WaltersArtMuseum/api-thewalters-org.git
+
+          # rename fields and convert delimited strings to arrays ("1,2" => [1,2])
+          #   create _files.json with stats and field data, so we have the field names if sparse json
+          - action: cmd
+            cmd: pixie:prepare
+
+        instructions: |
+          # @todo: scrape https://art.thewalters.org/browse/location/ to get object locations
+          bin/console bunny:upload /data/walters.zip 
+          bin/console bunny:download /data/walters.zip 
+      
+          cd data && git clone git@github.com:WaltersArtMuseum/api-thewalters-org.git walters && cd ..
+          bin/console pixie:import walters --reset && bin/console pixie:index walters
+          # should be in translate!  with an option for dispatching or populating
+          ./c pixie:trans walters --populate --index 
+          
+          bin/console pixie:iterate walters loc --tags "fetch-objects" -vv --limit 0
+          bin/console pixie:iterate walters coll --tags "extract-translation" -vv --limit 0
+          bin/console pixie:iterate walters per --tags "extract-translation" -vv --limit 0 
+          bin/console pixie:iterate walters obj --tags "extract-translation" -vv --limit 0 
+          bin/console pixie:it walters -vv
+          bin/console pixie:iterate translation source --marking=new --transition "translate" -vv --transport=sync
+          bin/console pixie:iterate translation source --marking=new --transition translate --limit 0
+      
+          bin/console pixie:iterate walters collections --tags "create-owner" -vv #create owner/project records in db
+          bin/console pixie:iterate walters obj --tags "add-translation" -vv
+          bin/console pixie:index walters --reset
+      
+      
+
+        notes: |
+        links:
+          website: https://thewalters.org/
+          github: https://github.com/WaltersArtMuseum/api-thewalters-org
+          flickr: https://flickr.com/photos/museado/albums/72177720319041729/
+          twitter: https://twitter.com/walters_museum
+          facebook: https://www.facebook.com/thewaltersartmuseum/
+
+      #  dir: /home/tac/data/walters
+        include: "*.csv" # during prepare only!
+        ignore: ['media.csv', 'relationships.csv']
+
+      files: # these are loaded in order, so dependencies are okay.  could also have different limits here.
+        # see https://github.com/WaltersArtMuseum/api-thewalters-org/issues/80
+        /exhibitions/: expo
+        /collections/: coll
+        /creators/: per
+      #  /locations/: loc
+        /art/: obj
+      tables:
+        medium:
+          properties:
+            - id:int
+            - label:text
+          translatable: [ label ]
+
+        #
+        list: &default
+          properties:
+            - id:int
+            - label:text
+            - description:text
+          translatable: [label, description]
+
+        cul:
+          <<: *default
+        tec:
+          <<: *default
+        expo:
+          <<: *default
+          rules:
+            /ExhibitionID/: id
+            /Objects/: objects,
+            /Title/: label
+#            /Citation/: description
+          properties:
+            - id:int # we should get this from extends or from the *default
+            - host:text#
+
+        obj:
+          rules:
+            /ObjectID/: id
+            /ObjectName/: label
+            /Culture/: cul
+            /Images/: images,  # split on comma during the "prepare" phase
+            /Provenance/: provenance;  # split on comma during the "prepare" phase
+            /Creators/: creators,
+            /Exhibitions/: expo,
+            /Inscriptions/: inscriptions;
+      #      /MuseumLocation/: false
+      #      /Period/: time
+      #      /Dynasty/: dynasty
+      #      /Medium/: mat
+            /Style/: tec
+            /ResourceURL/: citation
+      #      /Classification/: type
+            /CreditLine/: credit
+            /CollectionID/: 'collections,'
+#          uses: [id, credit]
+          properties:
+            - id:int # @todo: move to a "pk" section?
+#            - name: code
+#              type: string
+#              security: ROLE_ADMIN
+#              group: admin
+            - marking:text#?g=admin&security=ROLE_ADMIN
+            - citation:text?g=internal
+            - credit:text?g=internal
+            # this is a comma-separated string of pks
+            - collection_codes:rel.coll[@pk],
+            - provenance:text?g=internal
+            - classification:list.classification[@label]
+            - medium:list.medium[@label]
+            - cul:list.cul[@label]
+      #      - style:list.style[@label]
+      #      - medium:list # the text is the label, a one-to-many.  Auto-created
+      #      - mat:rel.mat
+            # a single dynasty label, so the pk in dynasty needs to be created
+            - dynasty:list.dynasty[@label]
+      #      - reign:list.reign[@label]
+            - date_text:text?g=date
+            - date_begin_year:text?g=date
+            - date_end_year:text?g=date
+      #      - dynasty:rel.time
+      #      - period:rel.time
+
+      # need to be standardized and included everywhere!
+            - dimensions:text?g=dim
+            - image_urls:array?g=ignored
+            - thumbnail_urls:array?g=ignored
+            - thumbnail:array?g=ignored
+            - images:array?g=image #rel to image?
+            - image_count:int#
+
+            - object_number:text?g=internal
+            - sort_number:text?g=internal
+          translatable: [ title, label, description ]
+          # the links in the chevron, with icons, title and href
+#          links:
+#            citation:
+#              title: credit
+#              href: citation
+
+
+#        exhibition:
+#          rules:
+#            /ExhibitionID/: id
+#            /ExhTitle/: label
+#            /Textblock/: description
+#          properties:
+#            - id:int
+#            - label:text
+#            - description:text
+#          translatable: [label, description]
+#
+          # CollectionID,CollectionName,CollDescription,CollectionURL
+        coll:
+          rules:
+            /CollectionID/: code
+            /CollectionName/: label
+            /CollDescription/: description
+            /CollectionURL/: url
+          properties:
+            - code:text
+            - label:text
+            - description:text
+          translatable: [label, description]
+
+        dynasty: # @todo: use yaml anchors
+          properties:
+            - code:text
+            - label:text
+            - description:text
+          translatable: [label, description]
+
+        classification: # @todo: use yaml anchors
+          properties:
+            - code:text
+            - label:text
+            - description:text
+          translatable: [label, description]
+
+        per:
+          rules:
+            /^name$/: label # don't match sort_name!
+            /^CreatorArt/: objs,
+            /date/: description
+            # see https://www.vocabulary.cl/Basic/Nationalities.htm to map to "national_origin:loc"
+            /biography/: bio
+          properties:
+            - id:int
+            - bio:text
+            - gender:text#
+            - marking:text#
+          translatable: [ label, description, bio ]
+      #  loc:
+      #    rules:
+      #      /LocationID/: id
+      #      /DisplayCurrentLocation/: label
+      #    properties:
+      #      - id:int
+      #      - label:text
+      #      - site:text#
+      #      - floor:text#
+      #      - object_count:int#
+      #    translatable: [ label ]
+      #  cul:
+      #    properties:
+      #      - code:text
+      #      - label:text
+
+        image:
+          extends: image
+#          <<: *image
+          parent: art
+
+#        ximage: &image
+#          workflow: ImageWorkflow
+#          parent: art
+#          properties:
+#            - key:text#
+#            - local # relative to datadir?  Need to download to upload to flickr, but not to s3
+#            - marking:text#?g=admin
+#            - imageUrl:text?g=image
+
+#        !php/const App\Workflow\Cleveland\ClevelandObjectWorkflow::IMAGE_TABLE:
+#          workflow: ImageWorkflow
+#          parent: art
+#          properties:
+#            - key:text#
+#            - local # relative to datadir?  Need to download to upload to flickr, but not to s3
+#            - marking:text#?g=admin
+#            - imageUrl:text?g=image
+#            - art_id:rel.art
 

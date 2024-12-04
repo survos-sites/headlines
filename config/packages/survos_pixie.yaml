@@ -1,47 +1,55 @@
 imports:
   - { resource: pixie/walters.yaml }
   - { resource: pixie/mexmus.yaml }
+  - { resource: pixie/larco.yaml }
+  - { resource: pixie/translation.yaml }
+  - { resource: pixie/tables/_image.yaml }
   # If you want to import a whole directory:
   # - { resource: services/ }
 
+
 survos_pixie:
+
+  # if matched, use this definition
+  # same as properties under table
+  #  internal:
+  #    - marking:text#?g=admin&security=ROLE_ADMIN
+  #    - citation:text?g=internal
+  #    - credit:text #
+  #    - label:text
+  #    - description:textarea
+
+  templates:
+    # hack to avoid having to define a 'properties' section in the config.
+    internal:
+      properties:
+        - marking:text#?g=admin&security=ROLE_ADMIN
+        - citation:text?g=internal
+        - credit:text #
+        - label:text
+        - description:textarea
+    image: &image
+      workflow: ImageWorkflow
+      properties:
+        - key:text#
+        - local # relative to datadir?  Need to download to upload to flickr, but not to s3
+        - marking:text#?g=admin
+        - imageUrl:text?g=image
+  #        - obj_id:rel.obj # we should probably have this, messy wtih Excel
+
+  # directories are relative to the project dir if not prefixed with /
 
   # location of the .pixie files.  Add to .gitignore to prevent checkin if in the repo path
   extension: .pixie.sqlite
-  # directories are relative to the project dir if not prefixed with /
   db_dir: pixie
-
-  # path for csv and json data.
+  # path for csv and json data.  relative to projectDir if it doesn't begin with a /
   data_root: data
+  transport: sync
   # location of the .config.yaml files
   config_dir: config/packages/pixie
   purge_before_import: true
-  pixies:
-    cleveland:
-      code: cleveland
-      version: 1.1
-      source:
-        git:
-          repo: ClevelandMuseumArt/openaccess
-          lfs: true
-          lsf_include: data.json
-        build:
-          - action: fetch
-            source: https://www.imls.gov/sites/default/files/2018_csv_museum_data_files.zip
-            target: data/mdf
-            unzip: data/mdf
-          - action: cmd
-            cmd: 'bunny:download /data/larco.zip --zone=museado --unzip'
-        instructions: |
-          cd data && \
-          git clone git@github.com:ClevelandMuseumArt/openaccess.git cleveland && cd cleveland && \
-          git lfs pull --include=data.json
-          bin/console pixie:import cleveland
-        notes: |
-          The JSON feed has more and better data, e.g. measurements broken out,
-          and exhibitions in a JSON list, artist id.
-          But it is more complicated to change property names of JSON
-        dir: ../data/cleveland
-        ignore: /csv/
-        include: "*.json"
+  limit: 50
 
+when@prod:
+  survos_pixie:
+    limit: 0

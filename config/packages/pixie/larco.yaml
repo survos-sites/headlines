@@ -1,0 +1,141 @@
+survos_pixie:
+  pixies:
+    larco:
+        code: larco
+        version: 1.1
+        source:
+          label: "Museo Larco"
+          locale: es
+          origin: web
+          country: pe
+          description: |
+            "Fundado en 1926 por el arqueólogo peruano Rafael Larco Hoyle, el Museo Larco invita a sus visitantes a descubrir más de 5,000 años de historia del antiguo Perú, a través de una fascinante colección de arte precolombino de aproximadamente 45,000 piezas. Rodeado por hermosos jardines, el museo está situado en una casona virreinal del siglo XVIII. Este inspirador espacio destaca por su famosa colección de arte erótico y sus depósitos visitables, uno de los pocos en el mundo abiertos al público. Las piezas del Museo Larco han sido exhibidas en los más prestigiosos museos del mundo y son consideradas íconos del arte precolombino a nivel mundial."
+
+          make:
+            - action: cmd
+              cmd: pixie:prepare
+            - action: cmd
+              cmd: pixie:import --no-index
+            - action: cmd
+              cmd: pixie:trans --populate --index
+            - action: cmd
+              cmd: pixie:trans --translate --target=en
+
+          build:
+            - action: cmd
+              cmd: init:larco --load # --json
+          instructions: |
+            
+            # transition!
+            ./c bunny:download data/larco.zip --unzip
+            mkdir data/larco/raw && mv data/larco/larco.json data/larco/raw/.
+            ./c bunny:download data/larco.zip data/larco --unzip --zone=museado -vv 
+            mkdir -p data/larco && cd data/larco && unzip ../larco.zip && cd ../..
+            ./c pixie:import larco --no-index
+            ./c pixie:trans --populate --index larco
+            # open and switch to Spanish.  @todo: fetch larco_translations     
+        
+        
+            bin/console init:larco --load # --json --limit 100 # dumps the json files, creates the owner record
+            bin/console pixie:import larco --reset --limit 100 -vv --total=44710 --batch=1000
+            bin/console pixie:index larco --reset
+        
+        
+            bin/console pixie:iterate larco obj --tags "extract-translation" -vv
+            bin/console pixie:trans --engine "libre"  --target "en" -vv
+            # upload to /pixie/ on cdn
+            ./c bunny:upload pixie/larco.zip / --zoneName=museado
+            ./c bunny:download larco.zip /pixie/ --zoneName=museado && unzip...
+            ./c pixie:index larco --reset
+          notes: |
+            #    init:larco and then bunny:upload to create the zipped JSON file
+          links:
+            search: https://catalogo.museolarco.org/buscador.php?flg=1
+            info: https://www.museolarco.org/
+          include: "*.json"
+          ignore: ['*.xml']
+
+        files:
+          /larco/: obj
+        tables:
+
+          core: &default
+            properties:
+              - id:int
+              - label:text
+              - description:text
+            translatable: [label, description]
+
+          obj:
+            rules:
+              /url_id/: id
+              /codigo_de_catalogacion/: code
+              /codigo_de_ubicacion/: loc
+              /crono/: time
+#              /cronologia/: time
+              /estante/: floor # ??
+              /repisa/: section # ?
+              /material_primario/: material_primario # ?
+        #      /tipo_de_material/: mat?g=ignored # ?
+              /escena_principal/: label
+              /descripcion/: description
+              /cultura_estilo/: cul
+            properties:
+              - id:int
+        #      - ubi:rel.loc #this should trigger the creation of a basic table
+#              - chrono:rel.time
+#              - loc:list.loc[@label]
+#              - loc:list.loc[@label]
+#        #      - mat:rel.mat
+#              - floor:text#
+#              - code:text?g=internal
+#              - material_primario:text?g=ignored
+#              - section:text#
+#              - region:text#
+#              - cul:list.cul[@label]
+#              - mat:list.mat[@label]
+#              - time:list.time[@label]
+#              - chrono:list.time[@label]
+        #      - loc:text# #in larco, these are codes, so not translated.
+            translatable: [label, description]
+        #    links: [citation, ] standardized?
+            facets: [mat, time, cul, region]
+            extras: [floor, loc]
+#            patches:
+#                /label|description/:
+#                  - regex: /retratoCabeza/
+#                    replacement: 'retrato de cabeza'
+
+        #      //: # match everything
+        #        /\\N/: ''
+        #      /is_/:
+        #        /1/: true
+        #        /0/: false
+
+
+          image:
+            workflow: ImageWorkflow
+            parent: obj
+            properties:
+              - key:text#
+              - marking:text#
+              - url:text
+              - obj_id:rel.obj
+
+          per:
+            properties:
+              - code:text
+              - bio:text
+              - gender:text#
+              - wiki_code:text
+
+          loc:
+            <<: *default
+          mat:
+            <<: *default
+          cul:
+            <<: *default
+          tec:
+            <<: *default
+          time:
+            <<: *default

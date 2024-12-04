@@ -136,6 +136,9 @@
     "survos/maker-bundle": {
         "version": "1.5.208"
     },
+    "survos/meili-admin-bundle": {
+        "version": "1.5.370"
+    },
     "survos/pixie-bundle": {
         "version": "1.5.242"
     },

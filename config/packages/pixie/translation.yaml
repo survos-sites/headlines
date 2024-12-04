@@ -1,0 +1,40 @@
+survos_pixie:
+  pixies:
+    translation:
+      code: translation
+      version: 1.1
+      type: system # a template for -translation
+      source:
+          instructions: auto-created
+          origin: system
+
+      tables:
+          source:
+              workflow: SourceTranslationWorkflow
+              properties:
+                  - hash:text # the hash of the SOURCE string, e.g. es-1124242
+                  - marking:text# # for iteration?
+                  - locale:text#
+                  - text # the original or translation, not null
+                  - pixie:text#
+                  - table_name:text# # first table to use this
+                  - prop:text# # first property to use this
+                  - key:text# # first item to use this
+                  - existing:array # array of existing, so we can filter by ones that don't exist.  We could even put the translations here.
+                  - translated:text # really the array of translations from libre, should be 'json'.  Maybe a join would be better
+
+          # we could
+          libre:
+#              mode: strict
+              properties:
+                  - key:text # unique key for the translation, source+hash+locale
+                  - marking:text# # translations have their own transitions
+                  - hash:text# # the hash of the SOURCE string, for getting all the translations grouped
+      #            - locale:text#
+                  - source:text# # the source language!
+                  - target:text# # the target language
+                  - pixie:text# #only if one big table
+                  - table_name:text# # debugging
+                  - prop:text# # debugging
+                  - text # the actual translation
+      #            - engine:text# # debatable

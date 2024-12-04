@@ -4,6 +4,7 @@ survos_pixie:
         code: mexmus
         version: 1.1
         source:
+            origin: web
 #            build:
 #                -   action: fetch
 #                    source: https://sic.cultura.gob.mx/opendata/d/0_museo_directorio.json

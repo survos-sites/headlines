@@ -1,0 +1,14 @@
+survos_pixie:
+  templates:
+    image: &image
+      workflow: ImageWorkflow
+      properties:
+        - key:text#
+        - local_path:text
+        - locale:text
+        - ocr:text
+        - marking:text#?g=admin
+        - imageUrl:text?g=image
+        - flickr_id:text## # browsable=false
+        - content_hash:text##  # of the actual file
+#        - obj_id:rel.obj
